@@ -16,15 +16,15 @@
 
 using namespace std;
 
-class langClass
+class wolClass
 {
 };
 
-class langFunction
+class wolFunction
 {
 };
 
-class langValue
+class wolValue
 {
 };
 
@@ -34,6 +34,9 @@ public:
 
   Stack () { }
 
+  map<string, wolClass> classes;
+  map<string, wolFunction> functions;
+  map<string, wolValue> variables;
 };
 
 class Vm
@@ -42,17 +45,14 @@ private:
   vector <string> coVector;
 public:
 
-  void
-  initBaseTypes () { }
+  void initBaseTypes () { }
 
-  void
-  initCodeVector (vector <string> _coVector)
+  void initCodeVector (vector <string> _coVector)
   {
     coVector = _coVector;
   }
 
-  void
-  execute ()
+  void execute ()
   {
     int position = 0;
 
@@ -101,13 +101,13 @@ public:
 
 
 //========================
+const string version = "1.0.0.0";
 
-int
-main (int argc, char** argv)
+int main (int argc, char** argv)
 {
   if (argc == 1)
     {
-      cout << "World of Legends Virtual Machine version 0.1.0 author Arkadiy Vitalyev." << endl;
+      cout << "World of Legends Virtual Machine Native\nVersion " << version << endl << "Author: snaulX, kosta222" << endl;
       exit (2);
     }
 
