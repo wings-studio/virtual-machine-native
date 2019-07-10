@@ -1,5 +1,27 @@
 import sys
 
+class langClass:
+ pass
+
+class langFunction:
+  pass
+
+class langValue:
+   pass
+
+
+class Stack:
+ 
+ def __init__(self):  
+  self.classes={}
+  self.functions={}
+  self.values={}
+
+ def __str__(self):
+  
+    return 'Stack items:\nclasses'+str(self.classes)+'\nfunctions:'+str(self.functions)+'\nvalues'+str(self.values)
+ 
+
 class TextWordVm:
   def initBaseTypes(self)->None:
      pass
@@ -10,6 +32,11 @@ class TextWordVm:
   def execute(self)->None:
     
     self.position=0
+
+    #----------------------
+    stack=Stack()
+    #----------------------
+
     isVmWorks=True
     while(isVmWorks):
 
@@ -22,7 +49,11 @@ class TextWordVm:
         else:
            raise Exception('Unknown keyword '+tWord+' at position:'+str(self.position))
            
-        self.position+=1               
+        self.position+=1
+   
+    def parse(stack_code:str)->Stack:  
+      pass
+             
 #===========================
 if __name__=='__main__':
 
