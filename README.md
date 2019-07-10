@@ -1,2 +1,2 @@
-# virtual-machine-native
-World of Legends Virtual Machine (for more information: http://www.wolnew.wordpress.com/wolvm/)
+# World of Legends Virtual Machine Native
+World of Legends Virtual Machine Native version (for more information: http://www.wolnew.wordpress.com/wolvm/)
