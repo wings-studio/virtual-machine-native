@@ -14,13 +14,13 @@ int main(int argc, char* argv[])
     }
     else
     {
-        if (argv[0] == "-info")
+        if (argv[1] == "-info")
         {
                 cout << info ;
         }
         else
         {
-            ifstream input(argv[0]); //open get file
+            ifstream input(argv[1]); //open get file
             string code = "", line;
             if (input.is_open())
             {
