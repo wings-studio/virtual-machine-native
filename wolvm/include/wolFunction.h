@@ -21,10 +21,6 @@ class wolFunction
 
         wolClass return_type;
         string body;
-
-    protected:
-
-    private:
 };
 
 #endif // WOLFUNCTION_H

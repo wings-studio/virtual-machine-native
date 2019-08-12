@@ -2,7 +2,7 @@
 1562826502 source:c:\users\user\desktop\sashino\wol-projects\wol\vm\virtual-machine-native\wolvm\src\wolclass.cpp
 	"wolClass.h"
 
-1562826112 c:\users\user\desktop\sashino\wol-projects\wol\vm\virtual-machine-native\wolvm\include\wolclass.h
+1565585316 c:\users\user\desktop\sashino\wol-projects\wol\vm\virtual-machine-native\wolvm\include\wolclass.h
 	<SecurityModifer.h>
 
 1562825674 source:c:\users\user\desktop\sashino\wol-projects\wol\vm\virtual-machine-native\wolvm\main.cpp
@@ -13,4 +13,11 @@
 1562825916 source:c:\users\user\desktop\sashino\wol-projects\wol\vm\virtual-machine-native\wolvm\src\securitymodifer.cpp
 
 1562826112 c:\users\user\desktop\sashino\wol-projects\wol\vm\virtual-machine-native\wolvm\include\securitymodifer.h
+
+1562826715 source:c:\users\user\desktop\sashino\wol-projects\wol\vm\virtual-machine-native\wolvm\src\wolfunction.cpp
+	"wolFunction.h"
+
+1565585293 c:\users\user\desktop\sashino\wol-projects\wol\vm\virtual-machine-native\wolvm\include\wolfunction.h
+	<wolClass.h>
+	<string>
 

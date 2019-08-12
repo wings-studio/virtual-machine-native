@@ -11,10 +11,6 @@ class wolClass
         wolClass(const wolClass& other);
         wolClass& operator=(const wolClass& other);
         SecurityModifer security;
-
-    protected:
-
-    private:
 };
 
 #endif // WOLCLASS_H
