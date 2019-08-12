@@ -38,3 +38,5 @@ Makefile
 *.out
 *.app
 wolvm/wolvm.depend
+wolvm/wolvm.layout
+wolvm/wolvm.cbp
