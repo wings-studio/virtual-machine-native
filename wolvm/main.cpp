@@ -20,6 +20,10 @@ int main(int argc, char* argv[])
         {
                 cout << info ;
         }
+        else if (argv[1] == "-help" || argv[1] == "--help")
+        {
+            cout << help ;
+        }
         else if (argv[1] == "-encode")
         {
             cout << "Sorry, while this option is this version in develop";
