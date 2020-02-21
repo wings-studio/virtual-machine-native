@@ -4,10 +4,12 @@
  *
  * Created on 21 февраля 2020 г., 7:27
  */
-
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <stdexcept>
+#include <stdbool.h>
+#include <string.h>
 #include "utilMacr.h"
 /*(!)
  * рус: Основная идея, выполнение промежуточного текстового языка так называемого
@@ -15,14 +17,48 @@
  * en: The main idea is execution of intermidiate text language as we call ITLWM(Intermediate text language of Wol Vm)
  * 
  */
-
 using namespace std;
-
 const string version = "1.0.0.0"; //need for future frameworks
 const string info = "World of Legends Virtual Machine Native\nVersion: " + version + "\nAuthors Alexander Gunge, Muhamedjanov Konstantin  K."; //need for future frameworks
 const string help = "World of Legends Virtual Machine v" + version + " Helper\n" +
 	+"\nArguments:\n";
 void Run(string input);
+
+class StringBuilder {
+public :
+	c buff[10];
+	I ind;
+	StringBuilder() {
+		ind = 0;
+	}
+	v Append(c char_) {
+		buff[ind] = char_;
+		ind++;
+	}
+	c * ToString() {
+		return buff;
+	}
+	v Clear() {
+		ind = 0;
+	}
+	v Terminate(){
+		buff[ind+1]='\0';
+	}
+	v Remove(I b,I e){
+		for (int b = 0; b < e; b++);
+			//buff[b]=''; // ошибка
+	}
+	c* Trim(){// удаляет пробелы | delete whitespaces
+		for (int i = 0; i < ind; i++)
+			if(buff[i]==' ');
+				//buff[i]=''; // ошибка
+		return buff;
+		
+					
+	}
+};
+
+void ThrowVMException(string message, int position, I type);
 /**
  * рус: В основном должен принимать текстовый файл программы - ITLWM(Intermediate text language of Wol Vm)
  * en: mainly accept text file of program - ITLWM(Intermediate text language of Wol Vm)
@@ -30,40 +66,32 @@ void Run(string input);
  * @param argv - вектор строк | vector of strings
  * @return - код успеха | success code
  */
+#define buf_for_itlwm_keyword 10
 int main(int argc, char* argv[]) {
 	if (argc == 1)
-	
 		cout << info;
-        else $
-	
+	else $
 		if (!strcmp(argv[1], "-info"))
-		
-			cout << info;
-		 else if (!strcmp(argv[1], "-help") || !strcmp(argv[1], "--help"))
-		
-			cout << help,
-			cout <<"Usage: <exe> <itlwm_text_file>.bld" << endl;
-		 else if (!strcmp(argv[1], "-encode"))
-		
-			cout << "Sorry, while this option is this version in develop";
-		 else $
-		
-			ifstream input(argv[1]); //открываем файл | open get file
-			S code = "", line;
-			if (input.is_open())$
-			
-				while (getline(input, line))
-				
-					code += line; //добавляем строку к коду|add line of file to code
-				
-			        $$
-			input.close(); // закрываем файл | close file
-		        $$
-	                $$
+		cout << info;
+	else if (!strcmp(argv[1], "-help") || !strcmp(argv[1], "--help"))
+		cout << help,
+		cout << "Usage: <exe> <itlwm_text_file>.bld" << endl;
+	else if (!strcmp(argv[1], "-encode"))
+		cout << "Sorry, while this option is this version in develop";
+	else $
+		ifstream input(argv[1]); //открываем файл | open get file
+	S code = "", line;
+	if (input.is_open())$
+		while (getline(input, line))
+			code += line; //добавляем строку к коду|add line of file to code
+	$$
+	input.close(); // закрываем файл | close file
+	$$
+	$$
 	_0_("main");
 }
-class Stack{
-	
+
+class Stack {
 };
 /* рус: Метод где мы анализиреум исходный код ITLWM(Intermediate text language
  * of Wol Vm), создаем оььекты на стеке.
@@ -73,75 +101,53 @@ class Stack{
 /**
  * Выполнение
  * Execution
- * @param mainstack обьект стека | stack object
  * @param input исходный код itlwm типа строки | source code of itlwm as string
  */
-void Run(Stack *mainstack,S input) {
-	/* Скопирова sharp
-	 */
-	//add base classes to stack                 parents:
-	mainstack->classes.Add("void", new Void()); //no
-	mainstack->classes.Add("byte", new wolByte()); //void
-	mainstack->classes.Add("short", new wolShort()); //byte
-	mainstack->classes.Add("string", new wolString()); //void
-	mainstack->classes.Add("int", new wolInt()); //short
-	mainstack->classes.Add("float", new wolFloat()); //int
-	mainstack->classes.Add("long", new wolLong()); //int
-	mainstack->classes.Add("double", new wolDouble()); //float
-	mainstack->classes.Add("Type", new wolType()); //void
-	mainstack->classes.Add("Func", new wolFunc()); //void
-	mainstack->classes.Add("Enum", new wolEnum()); //void
-	mainstack->classes.Add("char", new wolChar()); //void
-	mainstack->classes.Add("Block", new wolBlock()); //void
-	mainstack->classes.Add("Collection", new wolCollection()); //void
-	mainstack->classes.Add("Array", new wolArray()); //Collection
-	mainstack->classes.Add("Link", new wolLink()); //void
-	mainstack->classes.Add("bool", new wolBool()); //void
-
+StringBuilder buffer;
+void Run( S input) {
+	;
+	;
 	//main cycle
-        I position;
-	c current;
-	position = 0;
-	current = input[0];
-	I time = Environment.TickCount;
-	// парсим весь исходный код
-	// parsing of whole source code
-	while (position < input.size())$
-	
-		while (current==' ')$ //пропускаем пробелы|skip whitespaces
-		
+	I position = 0;
+	char current = input[0];
+	bool test=true;
+	while (position < input.size())
+	{
+		while (current==' ') //skip whitespaces
+		{
 			position++;
 			if (position > input.size())
 			{
-				cout<<"Build-file have only whitespaces", position, ExceptionType.BLDSyntaxException;
+				ThrowVMException("Build-file have only whitespaces", position, 0);
 				return;
 			}
 			current = input[position];
-		        $$ 
-		StringBuilder buffer = new StringBuilder();
-		while (!char.IsWhiteSpace(current))$ //образовываем текстовые слова|get word
-		
+		}
+		while (current!=' ') //get word
+		{
 			buffer.Append(current);
 			position++;
 			try
 			{
 				current = input[position];
-			} catch (IndexOutOfRangeException)
+				if (position > input.size() )
+					throw   runtime_error("");
+			} catch (exception& ex)
 			{
-				cout<<"Build-file have only one word"<< position<< ExceptionType.BLDSyntaxException;
+				ThrowVMException("Build-file have only one word", position, 0);
 				return;
 			}
-		        $$ //свернули слово,затем анализируем его|convoluted the word, than analize it
-		// начинаем анализ(этого слова)| begin analize(of this word)		
-		if (buffer.ToString() == "_loads")$
-		
+		}
+		buffer.Terminate();
+		if (!strcmp(buffer.ToString(),"_loads") )
+		{
 			buffer.Clear();
-			while (char.IsWhiteSpace(current))
+			while (current==' ')
 			{
 				position++;
-				if (position > input.Length)
+				if (position > input.size())
 				{
-					cout<<"Start of loads struct not found"<<position<< ExceptionType.BLDSyntaxException;
+					ThrowVMException("Start of loads struct not found", position, 0);
 					return;
 				}
 				current = input[position];
@@ -153,62 +159,60 @@ void Run(Stack *mainstack,S input) {
 				{
 					buffer.Append(current);
 					position++;
-					if (position > input.Length)
+					if (position > input.size())
 					{
-						cout<<"End of loads struct not found"<< position, ExceptionType.BLDSyntaxException);
+						ThrowVMException("End of loads struct not found", position, 0);
 						return;
 					}
 					current = input[position];
 				}
 				buffer.Remove(0, 1);
-				//начинаем парсить инструкцию loads|start parse loads
-				string dllSource = buffer.ToString();
+				//start parse loads
+				c* dllSource = buffer.ToString();
+				/*
 				Type mainType = typeof(VMLibrary);
 				List<string> dllNames = dllSource.Split(';').ToList();
-
 				foreach(string dllName in dllNames) {
 					Assembly assembly = null;
 					string full_path = AppDomain.CurrentDomain.BaseDirectory + dllName.Trim() + ".dll";
 					try
 					{
 						assembly = Assembly.LoadFrom(full_path);
-					} catch (Exception ex)
+					} catch (exception& ex)
 					{
-						cout<<"Library with info {full_path} not found.\n{ex.Message}"<< position, ExceptionType.FileNotFoundException;
+						ThrowVMException("Library with info {full_path} not found.\n{ex.Message}", position, ExceptionType.FileNotFoundException);
 						break;
 					}
 					Type mainClass = assembly.GetTypes().FirstOrDefault(t = > t != mainType && mainType.IsAssignableFrom(t));
 					if (test)
 					{
-						Console.WriteLine("Framework Info: " + assembly);
-						Console.WriteLine("Full path to framework: " + full_path);
-						Console.WriteLine(string.Join<Type>(' ', assembly.GetTypes()));
+						cout<<("Framework Info: " + assembly);
+						cout<<("Full path to framework: " + full_path);
+						cout<<(string.Join<Type>(' ', assembly.GetTypes()));
 					}
 					if (mainClass != null)
 					{
 						if (Activator.CreateInstance(mainClass) is VMLibrary mainObj) mainObj.Load();
-						else cout<<($"Main class in library by name {dllName} haven`t type VMLibrary and will cannot loaded", position, ExceptionType.LoadsException);
+						else ThrowVMException("Main class in library by name {dllName} haven`t type VMLibrary and will cannot loaded", position, ExceptionType.LoadsException);
 					} else
 					{
-						cout<<($"Library by name {dllName} haven`t main class and will cannot loaded", position, ExceptionType.LoadsException);
+						ThrowVMException("Library by name {dllName} haven`t main class and will cannot loaded", position, ExceptionType.LoadsException);
 					}
-
-				}
-				//конец парсинга текстовой инструкции loads|end parse loads
+				}*/
+				//end parse loads
 			} else
 			{
-				cout<<"Start of loads struct not found"<< position<< ExceptionType.BLDSyntaxException;
+				ThrowVMException("Start of loads struct not found", position, 0);
 			}
-                        $$
-		else if (buffer.ToString() == "stack")
+		} else if (!strcmp(buffer.ToString(),"stack") )
 		{
 			buffer.Clear();
-			while (char.IsWhiteSpace(current))
+			while (current==' ')
 			{
 				position++;
-				if (position > input.Length)
+				if (position > input.size())
 				{
-					cout<<"Start of stack not found", position<< ExceptionType.BLDSyntaxException;
+					ThrowVMException("Start of stack not found", position, 0);
 					return;
 				}
 				current = input[position];
@@ -220,9 +224,9 @@ cycle:
 				{
 					buffer.Append(current);
 					position++;
-					if (position > input.Length)
+					if (position > input.size())
 					{
-						cout<<"End of stack not found"<< position<< ExceptionType.BLDSyntaxException);
+						ThrowVMException("End of stack not found", position, 0);
 						return;
 					}
 					current = input[position];
@@ -233,21 +237,21 @@ cycle:
 					current = input[position];
 					goto cycle;
 				}
-				mainstack.Add(Stack.Parse(buffer.ToString().Trim()));
+//				mainstack.Add(Stack.Parse(buffer.ToString().Trim()));
 			} else
 			{
-				cout<<("Start of stack not found", position<< ExceptionType.BLDSyntaxException;
+				ThrowVMException("Start of stack not found", position, 0);
 			}
 			position--;
-		} else if (buffer.ToString() == "main")
+		} else if (!strcmp(buffer.ToString(), "main"))
 		{
 			buffer.Clear();
-			while (char.IsWhiteSpace(current))
+			while (current==' ')
 			{
 				position++;
-				if (position > input.Length)
+				if (position > input.size())
 				{
-					cout<<"Start of script not found"<< position<< ExceptionType.BLDSyntaxException);
+					ThrowVMException("Start of script not found", position, 0);
 					return;
 				}
 				current = input[position];
@@ -258,42 +262,42 @@ cycle:
 				{
 					buffer.Append(current);
 					position++;
-					if (position > input.Length)
+					if (position > input.size())
 					{
-						cout<<("End of script not found", position, ExceptionType.BLDSyntaxException);
+						ThrowVMException("End of script not found", position, 0);
 						return;
 					}
 					current = input[position];
 				}
-				Script.Parse(buffer.ToString().Trim().Remove(0, 1));
+//				Script.Parse(buffer.ToString().Trim().Remove(0, 1));
 			} else
 			{
-				cout<<("Start of script not found", position, ExceptionType.BLDSyntaxException);
+				ThrowVMException("Start of script not found", position, 0);
 			}
-		} else if (buffer.ToString() == "end")
+		} else if (!strcmp(buffer.ToString(),"end") )
 		{
 			if (test)
 			{
-				//тестируем стек|test stack
-				Console.WriteLine("Info about program in the end.\nMain stack:");
-				Console.WriteLine(mainstack.ToString());
-				Console.WriteLine("Expressions:");
-
-				foreach(string expr_name in expressions.Keys) {
-					Console.WriteLine(expr_name);
-				}
-				Console.WriteLine($"Time of program: {Environment.TickCount - time}");
+				//test stack
+				cout<<("Info about program in the end.\nMain stack:");
+//				cout<<(mainstack.ToString());
+				cout<<("Expressions:");
+//				foreach(string expr_name in expressions.Keys) {
+//					cout<<(expr_name);
+//				}
+				cout<<("Time of program: {Environment.TickCount - time}");
 			}
 			return;
-		} else if (buffer.ToString() == "}")
+		} else if (!strcmp("}", buffer.ToString()) )
 		{
 			position++;
 			continue;
 		} else
 		{
-			cout<<"Unknown keyword {buffer.ToString()}", position, ExceptionType.BLDSyntaxException;
+			ThrowVMException("Unknown keyword {buffer.ToString()}", position, 0);
 		}
-	        $$
+	}
 }
-
-
+void ThrowVMException(string message, int position, I type) {
+	cout << "Exception in position{" << position << "}" << message << endl;
+}

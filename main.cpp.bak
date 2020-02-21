@@ -4,7 +4,6 @@
  *
  * Created on 21 февраля 2020 г., 7:27
  */
-
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -15,19 +14,15 @@
  * en: The main idea is execution of intermidiate text language as we call ITLWM(Intermediate text language of Wol Vm)
  * 
  */
-
 using namespace std;
-
 const string version = "1.0.0.0"; //need for future frameworks
 const string info = "World of Legends Virtual Machine Native\nVersion: " + version + "\nAuthors Alexander Gunge, Muhamedjanov Konstantin  K."; //need for future frameworks
 const string help = "World of Legends Virtual Machine v" + version + " Helper\n" +
 	+"\nArguments:\n";
 void Run(string input);
-
 class ExceptionType {
 	S BLDSyntaxException = "";
 };
-
 void ThrowVMException(string message, int position, ExceptionType type);
 /**
  * рус: В основном должен принимать текстовый файл программы - ITLWM(Intermediate text language of Wol Vm)
@@ -37,58 +32,42 @@ void ThrowVMException(string message, int position, ExceptionType type);
  * @return - код успеха | success code
  */
 #define buf_for_itlwm_keyword 10
-
 int main(int argc, char* argv[]) {
 	if (argc == 1)
-
 		cout << info;
 	else $
-
 		if (!strcmp(argv[1], "-info"))
-
 		cout << info;
 	else if (!strcmp(argv[1], "-help") || !strcmp(argv[1], "--help"))
-
 		cout << help,
 		cout << "Usage: <exe> <itlwm_text_file>.bld" << endl;
 	else if (!strcmp(argv[1], "-encode"))
-
 		cout << "Sorry, while this option is this version in develop";
 	else $
-
 		ifstream input(argv[1]); //открываем файл | open get file
 	S code = "", line;
 	if (input.is_open())$
-
 		while (getline(input, line))
-
 			code += line; //добавляем строку к коду|add line of file to code
-
 	$$
 	input.close(); // закрываем файл | close file
 	$$
 	$$
 	_0_("main");
 }
-
 class StringBuilder {
 	S buff[10];
 	I ind;
-
 	StringBuilder() {
 		ind = 0;
 	}
-
 	v Append(c char_) {
-
 		buff[ind] = char_;
 		ind++;
 	}
-
 	c * ToString() {
 		return buff;
 	}
-
 	v Clear() {
 		ind = 0;
 	}
@@ -98,13 +77,8 @@ class StringBuilder {
 	v Remove(I b,I e){
 		for (int b = 0; b < e; b++)
 			buff[b]='';
-                      
-		
-
 	}
-
 };
-
 class Stack {
 };
 /* рус: Метод где мы анализиреум исходный код ITLWM(Intermediate text language
@@ -112,7 +86,6 @@ class Stack {
  * en: Methon where we parse(analize) source of ITLWM(Intermediate text language
  * of Wol Vm), create objects on stack.
  */
-
 /**
  * Выполнение
  * Execution
@@ -120,9 +93,6 @@ class Stack {
  */
 #define Length length()
 void Run( S input) {
-
-	
-	 
 	StringBuilder buffer;
 	//main cycle
 	I position = 0;
@@ -184,7 +154,6 @@ void Run( S input) {
 				string dllSource = buffer.ToString();
 				Type mainType = typeof(VMLibrary);
 				List<string> dllNames = dllSource.Split(';').ToList();
-
 				foreach(string dllName in dllNames) {
 					Assembly assembly = null;
 					string full_path = AppDomain.CurrentDomain.BaseDirectory + dllName.Trim() + ".dll";
@@ -211,7 +180,6 @@ void Run( S input) {
 					{
 						ThrowVMException("Library by name {dllName} haven`t main class and will cannot loaded", position, ExceptionType.LoadsException);
 					}
-
 				}
 				//end parse loads
 			} else
@@ -296,7 +264,6 @@ cycle:
 				Console.WriteLine("Info about program in the end.\nMain stack:");
 				Console.WriteLine(mainstack.ToString());
 				Console.WriteLine("Expressions:");
-
 				foreach(string expr_name in expressions.Keys) {
 					Console.WriteLine(expr_name);
 				}
@@ -313,10 +280,6 @@ cycle:
 		}
 	}
 }
-
 void ThrowVMException(string message, int position, ExceptionType type) {
 	cout << "Exception in position{" << position < "}" << message << endl;
 }
-
-
-
