@@ -9,49 +9,74 @@
 #include <string>
 #include <fstream>
 #include "utilMacr.h"
+/*(!)
+ * рус: Основная идея, выполнение промежуточного текстового языка так называемого
+ * ITLWM(Intermediate text language of Wol Vm)
+ * en: The main idea is execution of intermidiate text language as we call ITLWM(Intermediate text language of Wol Vm)
+ * 
+ */
 
 using namespace std;
 
 const string version = "1.0.0.0"; //need for future frameworks
-const string info = "World of Legends Virtual Machine Native\nVersion: " + version + "\nAuthors: snaulX, kosta2222"; //need for future frameworks
+const string info = "World of Legends Virtual Machine Native\nVersion: " + version + "\nAuthors Alexander Gunge, Muhamedjanov Konstantin  K."; //need for future frameworks
 const string help = "World of Legends Virtual Machine v" + version + " Helper\n" +
 	+"\nArguments:\n";
 void Run(string input);
+/**
+ * рус: В основном должен принимать текстовый файл программы - ITLWM(Intermediate text language of Wol Vm)
+ * en: mainly accept text file of program - ITLWM(Intermediate text language of Wol Vm)
+ * @param argc - количество аргументов | amount of arguments
+ * @param argv - вектор строк | vector of strings
+ * @return - код успеха | success code
+ */
 int main(int argc, char* argv[]) {
 	if (argc == 1)
-	{
+	
 		cout << info;
-	} else
-	{
+        else $
+	
 		if (!strcmp(argv[1], "-info"))
-		{
+		
 			cout << info;
-		} else if (!strcmp(argv[1], "-help") || !strcmp(argv[1], "--help"))
-		{
-			cout << help;
-		} else if (!strcmp(argv[1], "-encode"))
-		{
+		 else if (!strcmp(argv[1], "-help") || !strcmp(argv[1], "--help"))
+		
+			cout << help,
+			cout <<"Usage: <exe> <itlwm_text_file>.bld" << endl;
+		 else if (!strcmp(argv[1], "-encode"))
+		
 			cout << "Sorry, while this option is this version in develop";
-		} else
-		{
-			ifstream input(argv[1]); //open get file
-			string code = "", line;
-			if (input.is_open())
-			{
+		 else $
+		
+			ifstream input(argv[1]); //открываем файл | open get file
+			S code = "", line;
+			if (input.is_open())$
+			
 				while (getline(input, line))
-				{
-					code += line; //add line of file to code
-				}
-			}
-			input.close(); // close file
-		}
-	}
-	return 0;
+				
+					code += line; //добавляем строку к коду|add line of file to code
+				
+			        $$
+			input.close(); // закрываем файл | close file
+		        $$
+	                $$
+	_0_("main");
 }
 class Stack{
 	
 };
-void Run(Stack *mainstack,string input) {
+/* рус: Метод где мы анализиреум исходный код ITLWM(Intermediate text language
+ * of Wol Vm), создаем оььекты на стеке.
+ * en: Methon where we parse(analize) source of ITLWM(Intermediate text language
+ * of Wol Vm), create objects on stack.
+ */
+/**
+ * Выполнение
+ * Execution
+ * @param mainstack обьект стека | stack object
+ * @param input исходный код itlwm типа строки | source code of itlwm as string
+ */
+void Run(Stack *mainstack,S input) {
 	/* Скопирова sharp
 	 */
 	//add base classes to stack                 parents:
@@ -74,27 +99,28 @@ void Run(Stack *mainstack,string input) {
 	mainstack->classes.Add("bool", new wolBool()); //void
 
 	//main cycle
-	int position;
-	char current;
+        I position;
+	c current;
 	position = 0;
 	current = input[0];
-	int time = Environment.TickCount;
+	I time = Environment.TickCount;
 	// парсим весь исходный код
+	// parsing of whole source code
 	while (position < input.size())$
 	
-		while (current==' ')$ //skip whitespaces
+		while (current==' ')$ //пропускаем пробелы|skip whitespaces
 		
 			position++;
 			if (position > input.size())
 			{
-				cout<<("Build-file have only whitespaces", position, ExceptionType.BLDSyntaxException);
+				cout<<"Build-file have only whitespaces", position, ExceptionType.BLDSyntaxException;
 				return;
 			}
 			current = input[position];
 		        $$ 
 		StringBuilder buffer = new StringBuilder();
-		while (!char.IsWhiteSpace(current)) //get word
-		{
+		while (!char.IsWhiteSpace(current))$ //образовываем текстовые слова|get word
+		
 			buffer.Append(current);
 			position++;
 			try
@@ -105,9 +131,10 @@ void Run(Stack *mainstack,string input) {
 				cout<<"Build-file have only one word"<< position<< ExceptionType.BLDSyntaxException;
 				return;
 			}
-		}
-		if (buffer.ToString() == "_loads")
-		{
+		        $$ //свернули слово,затем анализируем его|convoluted the word, than analize it
+		// начинаем анализ(этого слова)| begin analize(of this word)		
+		if (buffer.ToString() == "_loads")$
+		
 			buffer.Clear();
 			while (char.IsWhiteSpace(current))
 			{
@@ -134,7 +161,7 @@ void Run(Stack *mainstack,string input) {
 					current = input[position];
 				}
 				buffer.Remove(0, 1);
-				//start parse loads
+				//начинаем парсить инструкцию loads|start parse loads
 				string dllSource = buffer.ToString();
 				Type mainType = typeof(VMLibrary);
 				List<string> dllNames = dllSource.Split(';').ToList();
@@ -167,12 +194,13 @@ void Run(Stack *mainstack,string input) {
 					}
 
 				}
-				//end parse loads
+				//конец парсинга текстовой инструкции loads|end parse loads
 			} else
 			{
 				cout<<"Start of loads struct not found"<< position<< ExceptionType.BLDSyntaxException;
 			}
-		} else if (buffer.ToString() == "stack")
+                        $$
+		else if (buffer.ToString() == "stack")
 		{
 			buffer.Clear();
 			while (char.IsWhiteSpace(current))
@@ -246,7 +274,7 @@ cycle:
 		{
 			if (test)
 			{
-				//test stack
+				//тестируем стек|test stack
 				Console.WriteLine("Info about program in the end.\nMain stack:");
 				Console.WriteLine(mainstack.ToString());
 				Console.WriteLine("Expressions:");
@@ -263,7 +291,7 @@ cycle:
 			continue;
 		} else
 		{
-			cout<<($"Unknown keyword {buffer.ToString()}", position, ExceptionType.BLDSyntaxException);
+			cout<<"Unknown keyword {buffer.ToString()}", position, ExceptionType.BLDSyntaxException;
 		}
 	        $$
 }

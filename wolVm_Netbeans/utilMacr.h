@@ -32,3 +32,8 @@ printf("in func->%s\n",func);printf("var->%s\n",var);
 #define is_null_ptrErr(op,func,var) if(op==NULL) {lbr;ne0;_e_(func,var);rbr;exit(-10);}
 #endif	/* UTILMACR_H */
 
+#define I int
+#define R float
+#define D double
+#define S string
+#define c char 
