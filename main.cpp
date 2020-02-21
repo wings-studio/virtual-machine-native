@@ -144,14 +144,14 @@ void Run(Stack *mainstack,S input) {
 					kw_buf[cn_kw]=current;
 					position++;
 					if (position > input.size())
-						cout<<"End of loads struct not found"<< position, ExceptionType.BLDSyntaxException),
+						cout<<"End of loads struct not found"<< position/*, ExceptionType.BLDSyntaxException)*/,
 						return;
 					current = input[position];
                                         $$ 
 				// удалить скобку ({) | delete bracket ({)
 		                kw_buf[0]=' ';				
 				//начинаем парсить инструкцию loads|start parse loads
-				string dllSource = buffer.ToString();
+				/*string dllSource = buffer.ToString();
 				Type mainType = typeof(VMLibrary);
 				List<string> dllNames = dllSource.Split(';').ToList();
 				foreach(string dllName in dllNames) {
@@ -180,23 +180,20 @@ void Run(Stack *mainstack,S input) {
 					{
 						cout<<($"Library by name {dllName} haven`t main class and will cannot loaded", position, ExceptionType.LoadsException);
 					}
-				}
+				}*/
 				//конец парсинга текстовой инструкции loads|end parse loads
 			        $$
 			else
-			{
-				cout<<"Start of loads struct not found"<< position<< ExceptionType.BLDSyntaxException;
-			}
-                        $$
-		else if (buffer.ToString() == "stack")
-		{
+				cout<<"Start of loads struct not found"<< position/*<< ExceptionType.BLDSyntaxException*/;
+                                $$
+		else if (!strcmp(kw_buf, "stack"))$
 			buffer.Clear();
 			while (char.IsWhiteSpace(current))
 			{
 				position++;
 				if (position > input.Length)
 				{
-					cout<<"Start of stack not found", position<< ExceptionType.BLDSyntaxException;
+					cout<<"Start of stack not found"<< position/*<< ExceptionType.BLDSyntaxException*/;
 					return;
 				}
 				current = input[position];
@@ -210,7 +207,7 @@ cycle:
 					position++;
 					if (position > input.Length)
 					{
-						cout<<"End of stack not found"<< position<< ExceptionType.BLDSyntaxException);
+						cout<<"End of stack not found"<< position/*<< ExceptionType.BLDSyntaxException*/;
 						return;
 					}
 					current = input[position];
@@ -227,7 +224,8 @@ cycle:
 				cout<<("Start of stack not found", position<< ExceptionType.BLDSyntaxException;
 			}
 			position--;
-		} else if (buffer.ToString() == "main")
+		$$ 
+		else if (buffer.ToString() == "main")
 		{
 			buffer.Clear();
 			while (char.IsWhiteSpace(current))
@@ -272,13 +270,10 @@ cycle:
 				Console.WriteLine($"Time of program: {Environment.TickCount - time}");
 			}
 			return;
-		} else if (buffer.ToString() == "}")
-		{
-			position++;
+		 else if (buffer.ToString() == "}")
+			position++,
 			continue;
-		} else
-		{
+		 else
 			cout<<"Unknown keyword {buffer.ToString()}", position, ExceptionType.BLDSyntaxException;
-		}
 	        $$
 }
