@@ -1,16 +1,12 @@
 Skip to content
 Search or jump to…
-
 Pull requests
 Issues
 Marketplace
 Explore
- 
 @kosta2222 
 Learn Git and GitHub without any code!
 Using the Hello World guide, you’ll start a branch, write comments, and open a pull request.
-
-
 world-of-legends
 /
 virtual-machine-native
@@ -21,7 +17,6 @@ virtual-machine-native/main.cpp
 @kosta2222 kosta2222 refac-d_csharp
 00dc2ed yesterday
 279 lines (279 sloc)  9.86 KB
-  
 /* 
  * File:   main.cpp
  * Author: papa

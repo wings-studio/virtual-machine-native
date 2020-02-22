@@ -17,7 +17,6 @@
  * en: The main idea is execution of intermidiate text language as we call ITLWM(Intermediate text language of Wol Vm)
  * 
  */
-
 using namespace std;
 const string version = "1.0.0.0"; //need for future frameworks
 const string info = "World of Legends Virtual Machine Native\nVersion: " + version + "\nAuthors Alexander Gunge, Muhamedjanov Konstantin  K."; //need for future frameworks
@@ -26,7 +25,6 @@ const string help = "World of Legends Virtual Machine v" + version + " Helper\n"
 S GIT_BR="";// ветка Git | git branch
 S GIT_HASH="";// хэш коммита | commit hash
 void Run(string input);
-
 void ThrowVMException(string message, int position, I type);
 /**
  * рус: В основном должен принимать текстовый файл программы - ITLWM(Intermediate text language of Wol Vm)
@@ -35,7 +33,6 @@ void ThrowVMException(string message, int position, I type);
  * @param argv - вектор строк | vector of strings
  * @return - код успеха | success code
  */
-
 int main(int argc, char* argv[]) {
 	if (argc == 1)
 		cout << info;
@@ -78,54 +75,40 @@ public:
 	// Создать новый массив | create new array
 	l buff_n[buf_for_itlwm_keyword];
 	I ind;
-
 	StringBuilder() {
 		ind = 0;
 	}
-
 	v Append(l char_) {
 		buff[ind] = char_;
 		ind++;
 	}
-
 	l * ToString() {
 		return buff;
 	}
-
 	v Clear() {
 		this->ind = 0;
 	}
-
 	v Terminate() {
 		buff[ind + 1] = '\0';
 	}
-
 	l* RemoveFirst() {
-		
 		strcpy(buff_n, (char*)(&this->ToString()[1]));
 		strcpy(buff,buff_n);
-			
-
 		return buff_n;
 	}
-
 	I Len() {
 		return strlen(buff);
 	}
-
 	l * Trim() {// удаляет пробелы c начала строки | delete whitespaces from the begging of string
 		I ws_cn_before = 0;
 		I le_cn = 0;
 		I count_where_beg_ri_ws = 0;
 		I pos = 0;
-
 		for (int i = 0; i<this->Len(); i++)
-		
 			if (buff[i] == ' ')
 				ws_cn_before += 1;
 			else
 				break;
-		
 		for (int i= 0; i<this->Len(); i++)
 			if (buff[i] != ' ')
 				le_cn++;
@@ -133,18 +116,10 @@ public:
 		for (int i = ws_cn_before; i < count_where_beg_ri_ws; i++)
 			buff_n[pos] = buff[i],
 			pos++;
-
-
-
-
-
 		//--------------------------------------------------------------------------
 		return buff_n;
 	}
-	
-	
 };
-
 StringBuilder buffer;
 void Run( S input) {
 	;
