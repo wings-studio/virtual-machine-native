@@ -6,6 +6,8 @@
 class StringBuilder {
 public :
 	l buff[buf_for_itlwm_keyword];
+	// Создать новый массив | create new array
+	l buff_n[buf_for_itlwm_keyword];
 	I ind;
 	StringBuilder() {
 		ind = 0;
@@ -27,6 +29,9 @@ public :
 		for (int b = 0; b < e; b++);
 			//buff[b]=''; // ошибка
 	}
+	I Len(){
+		return strlen(buff);
+	}
 	l * Trim(){// удаляет пробелы c начала строки | delete whitespaces from the begging of string
 		I ws_cn=0;
 		I s_l=strlen(buff);
@@ -34,9 +39,12 @@ public :
 			if(buff[i]==' ')
 				ws_cn++;
 				//buff[i]=''; // ошибка
-		// Создать новый массив | create new array
-		l buff_n[buf_for_itlwm_keyword];
-		strcpy(buff_n, this->ToString());
+		
+		I k=0;
+		for (int i = ws_cn-1; i < this->Len(); i++)
+			buff_n[k]=buff_n[i],
+		        k++; 		
+
 		return buff_n;
 	}
 };
@@ -184,8 +192,8 @@ int main(int argc, char** argv) {
 //	testToString();
 //	std::cout << "%TEST_FINISHED% time=0 testToString (newsimpletest)" << std::endl;
 
-//	std::cout << "%TEST_STARTED% testTrim (newsimpletest)" << std::endl;
-//	testTrim();
+	std::cout << "%TEST_STARTED% testTrim (newsimpletest)" << std::endl;
+	testTrim();
 //	std::cout << "%TEST_FINISHED% time=0 testTrim (newsimpletest)" << std::endl;
 
 	std::cout << "%SUITE_FINISHED% time=0" << std::endl;
