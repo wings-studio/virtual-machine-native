@@ -1,10 +1,3 @@
-/* 
- * File:   newsimpletest.cpp
- * Author: papa
- *
- * Created on 22.02.2020, 15:28:17
- */
-
 #include <stdlib.h>
 #include <iostream>
 #include "utilMacr.h"
@@ -12,16 +5,16 @@
 #define buf_for_itlwm_keyword 10
 class StringBuilder {
 public :
-	cc buff[buf_for_itlwm_keyword];
+	l buff[buf_for_itlwm_keyword];
 	I ind;
 	StringBuilder() {
 		ind = 0;
 	}
-	v Append(cc char_) {
+	v Append(l char_) {
 		buff[ind] = char_;
 		ind++;
 	}
-	cc * ToString() {
+	l * ToString() {
 		return buff;
 	}
 	v Clear() {
@@ -34,11 +27,17 @@ public :
 		for (int b = 0; b < e; b++);
 			//buff[b]=''; // ошибка
 	}
-	cc * Trim(){// удаляет пробелы | delete whitespaces
+	l * Trim(){// удаляет пробелы c начала строки | delete whitespaces from the begging of string
+		I ws_cn=0;
+		I s_l=strlen(buff);
 		for (int i = 0; i < ind; i++)
-			if(buff[i]==' ');
+			if(buff[i]==' ')
+				ws_cn++;
 				//buff[i]=''; // ошибка
-		return buff;
+		// Создать новый массив | create new array
+		l buff_n[buf_for_itlwm_keyword];
+		strcpy(buff_n, this->ToString());
+		return buff_n;
 	}
 };
 
@@ -63,7 +62,7 @@ void testAppend() {
 	stringBuilder.Append(char_3);
 	
 	stringBuilder.Terminate();
-	cc* str=stringBuilder.ToString();
+	l* str=stringBuilder.ToString();
 	if (strcmp(str,"abc") /*check result*/)
 	{
 		std::cout << "%TEST_FAILED% time=0 testname=testAppend (newsimpletest) message=error message sample" << std::endl;
@@ -128,14 +127,34 @@ void testToString() {
 
 //char* StringBuilder::Trim();
 
-//void testTrim() {
+void testTrim() {
+	StringBuilder stringBuilder;
+	char char_01=' ';
+	char char_02=' ';
+	char char_03=' ';
+	stringBuilder.Append(char_01);
+	stringBuilder.Append(char_02);
+	stringBuilder.Append(char_03);
+	char char_1='a';
+	
+	stringBuilder.Append(char_1);
+	
+	char char_2='b';
 //	StringBuilder stringBuilder;
-//	char* result = stringBuilder.Trim();
-//	if (true /*check result*/)
-//	{
-//		std::cout << "%TEST_FAILED% time=0 testname=testTrim (newsimpletest) message=error message sample" << std::endl;
-//	}
-//}
+	stringBuilder.Append(char_2);
+	
+	char char_3='c';
+//	StringBuilder stringBuilder;
+	stringBuilder.Append(char_3);
+	
+	stringBuilder.Terminate();
+	l* str=stringBuilder.ToString();
+	char* result = stringBuilder.Trim();
+	if (strcmp(result,"abc"))
+	{
+		std::cout << "%TEST_FAILED% time=0 testname=testTrim (newsimpletest) message=error message sample" << std::endl;
+	}
+}
 
 int main(int argc, char** argv) {
 	std::cout << "%SUITE_STARTING% newsimpletest" << std::endl;
@@ -157,8 +176,8 @@ int main(int argc, char** argv) {
 //	testStringBuilder();
 //	std::cout << "%TEST_FINISHED% time=0 testStringBuilder (newsimpletest)" << std::endl;
 
-//	std::cout << "%TEST_STARTED% testTerminate (newsimpletest)" << std::endl;
-//	testTerminate();
+	std::cout << "%TEST_STARTED% testTerminate (newsimpletest)" << std::endl;
+	testTerminate();
 //	std::cout << "%TEST_FINISHED% time=0 testTerminate (newsimpletest)" << std::endl;
 
 //	std::cout << "%TEST_STARTED% testToString (newsimpletest)" << std::endl;
