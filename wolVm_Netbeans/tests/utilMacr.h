@@ -36,5 +36,5 @@ printf("in func->%s\n",func);printf("var->%s\n",var);
 #define R float
 #define D double
 #define S string
-#define cc char
+#define l char
 #define v void

@@ -17,46 +17,15 @@
  * en: The main idea is execution of intermidiate text language as we call ITLWM(Intermediate text language of Wol Vm)
  * 
  */
+
 using namespace std;
 const string version = "1.0.0.0"; //need for future frameworks
 const string info = "World of Legends Virtual Machine Native\nVersion: " + version + "\nAuthors Alexander Gunge, Muhamedjanov Konstantin  K."; //need for future frameworks
 const string help = "World of Legends Virtual Machine v" + version + " Helper\n" +
 	+"\nArguments:\n";
+S GIT_BR="";// ветка Git | git branch
+S GIT_HASH="";// хэш коммита | commit hash
 void Run(string input);
-
-class StringBuilder {
-public :
-	c buff[10];
-	I ind;
-	StringBuilder() {
-		ind = 0;
-	}
-	v Append(c char_) {
-		buff[ind] = char_;
-		ind++;
-	}
-	c * ToString() {
-		return buff;
-	}
-	v Clear() {
-		ind = 0;
-	}
-	v Terminate(){
-		buff[ind+1]='\0';
-	}
-	v Remove(I b,I e){
-		for (int b = 0; b < e; b++);
-			//buff[b]=''; // ошибка
-	}
-	c* Trim(){// удаляет пробелы | delete whitespaces
-		for (int i = 0; i < ind; i++)
-			if(buff[i]==' ');
-				//buff[i]=''; // ошибка
-		return buff;
-		
-					
-	}
-};
 
 void ThrowVMException(string message, int position, I type);
 /**
@@ -66,7 +35,7 @@ void ThrowVMException(string message, int position, I type);
  * @param argv - вектор строк | vector of strings
  * @return - код успеха | success code
  */
-#define buf_for_itlwm_keyword 10
+
 int main(int argc, char* argv[]) {
 	if (argc == 1)
 		cout << info;
@@ -90,7 +59,6 @@ int main(int argc, char* argv[]) {
 	$$
 	_0_("main");
 }
-
 class Stack {
 };
 /* рус: Метод где мы анализиреум исходный код ITLWM(Intermediate text language
@@ -103,6 +71,80 @@ class Stack {
  * Execution
  * @param input исходный код itlwm типа строки | source code of itlwm as string
  */
+#define buf_for_itlwm_keyword 10
+class StringBuilder {
+public:
+	l buff[buf_for_itlwm_keyword];
+	// Создать новый массив | create new array
+	l buff_n[buf_for_itlwm_keyword];
+	I ind;
+
+	StringBuilder() {
+		ind = 0;
+	}
+
+	v Append(l char_) {
+		buff[ind] = char_;
+		ind++;
+	}
+
+	l * ToString() {
+		return buff;
+	}
+
+	v Clear() {
+		this->ind = 0;
+	}
+
+	v Terminate() {
+		buff[ind + 1] = '\0';
+	}
+
+	l* RemoveFirst() {
+		
+		strcpy(buff_n, (char*)(&this->ToString()[1]));
+		strcpy(buff,buff_n);
+			
+
+		return buff_n;
+	}
+
+	I Len() {
+		return strlen(buff);
+	}
+
+	l * Trim() {// удаляет пробелы c начала строки | delete whitespaces from the begging of string
+		I ws_cn_before = 0;
+		I le_cn = 0;
+		I count_where_beg_ri_ws = 0;
+		I pos = 0;
+
+		for (int i = 0; i<this->Len(); i++)
+		
+			if (buff[i] == ' ')
+				ws_cn_before += 1;
+			else
+				break;
+		
+		for (int i= 0; i<this->Len(); i++)
+			if (buff[i] != ' ')
+				le_cn++;
+		count_where_beg_ri_ws = ws_cn_before + le_cn;
+		for (int i = ws_cn_before; i < count_where_beg_ri_ws; i++)
+			buff_n[pos] = buff[i],
+			pos++;
+
+
+
+
+
+		//--------------------------------------------------------------------------
+		return buff_n;
+	}
+	
+	
+};
+
 StringBuilder buffer;
 void Run( S input) {
 	;
@@ -166,9 +208,9 @@ void Run( S input) {
 					}
 					current = input[position];
 				}
-				buffer.Remove(0, 1);
+				buffer.RemoveFirst();
 				//start parse loads
-				c* dllSource = buffer.ToString();
+				l* dllSource = buffer.ToString();
 				/*
 				Type mainType = typeof(VMLibrary);
 				List<string> dllNames = dllSource.Split(';').ToList();
