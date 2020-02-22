@@ -99,7 +99,7 @@ public:
 	I Len() {
 		return strlen(buff);
 	}
-	l * Trim() {// удаляет пробелы c начала строки | delete whitespaces from the begging of string
+	l * Trim() {// удаляет пробелы c начала строки и конца строки | delete whitespaces from the begging of string and from the end
 		I ws_cn_before = 0;
 		I le_cn = 0;
 		I count_where_beg_ri_ws = 0;
