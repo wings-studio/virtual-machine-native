@@ -22,10 +22,30 @@ const string version = "1.0.0.0"; //need for future frameworks
 const string info = "World of Legends Virtual Machine Native\nVersion: " + version + "\nAuthors Alexander Gunge, Muhamedjanov Konstantin  K."; //need for future frameworks
 const string help = "World of Legends Virtual Machine v" + version + " Helper\n" +
 	+"\nArguments:\n";
-S GIT_BR="";// ветка Git | git branch
-S GIT_HASH="";// хэш коммита | commit hash
+S GIT_BR = ""; // ветка Git | git branch
+S GIT_HASH = ""; // хэш коммита | commit hash
 void Run(string input);
-void ThrowVMException(string message, int position, I type);
+typedef enum  {
+	//this type throws when ...
+	TypeNotSupportedException, //... when in enum init method and etc.
+	StackOverflowException, //... size of stack is bigger then memory
+	InvalidTypeException, //... get type doesn`t fits
+	NotFoundException, //... 'anything' not found
+	InitilizateException, //... problems made on initilization
+	BLDSyntaxException, //... wrong syntax of build-file
+	LoadsException, //... framework can`t load or other troubles with him
+	FileNotFoundException, //... file not found
+	ArgumentsNullException, //... argument have 'null'
+	IndexOutOfRangeException, //... get index who bigger than length of collection
+	NullRefrenceException, //... operation work with 'null'
+	ChildException, //... class or functions hasn`t child
+	SecurityException, //... call private property
+	ArgumentsOutOfRangeException, //... arguments bigger or lower than need
+	NumberFormatException, //... parsing not valid string (to any number)
+	FormatException, //... parsing not valid string (to any type)
+	ValueException //... value call with parents or any more
+}ExceptionType;
+void ThrowVMException(string message, int position, ExceptionType type);
 /**
  * рус: В основном должен принимать текстовый файл программы - ITLWM(Intermediate text language of Wol Vm)
  * en: mainly accept text file of program - ITLWM(Intermediate text language of Wol Vm)
@@ -92,8 +112,8 @@ public:
 		buff[ind + 1] = '\0';
 	}
 	l* RemoveFirst() {
-		strcpy(buff_n, (char*)(&this->ToString()[1]));
-		strcpy(buff,buff_n);
+		strcpy(buff_n, (char*) (&this->ToString()[1]));
+		strcpy(buff, buff_n);
 		return buff_n;
 	}
 	I Len() {
@@ -109,7 +129,7 @@ public:
 				ws_cn_before += 1;
 			else
 				break;
-		for (int i= 0; i<this->Len(); i++)
+		for (int i = 0; i<this->Len(); i++)
 			if (buff[i] != ' ')
 				le_cn++;
 		count_where_beg_ri_ws = ws_cn_before + le_cn;
@@ -121,50 +141,50 @@ public:
 	}
 };
 StringBuilder buffer;
-void Run( S input) {
+void Run(S input) {
 	;
 	;
 	//main cycle
 	I position = 0;
 	char current = input[0];
-	bool test=true;
+	bool test = true;
 	while (position < input.size())
 	{
-		while (current==' ') //skip whitespaces
+		while (current == ' ') //skip whitespaces
 		{
 			position++;
 			if (position > input.size())
 			{
-				ThrowVMException("Build-file have only whitespaces", position, 0);
+				ThrowVMException("Build-file have only whitespaces", position, BLDSyntaxException);
 				return;
 			}
 			current = input[position];
 		}
-		while (current!=' ') //get word
+		while (current != ' ') //get word
 		{
 			buffer.Append(current);
 			position++;
 			try
 			{
 				current = input[position];
-				if (position > input.size() )
-					throw   runtime_error("");
+				if (position > input.size())
+					throw runtime_error("");
 			} catch (exception& ex)
 			{
-				ThrowVMException("Build-file have only one word", position, 0);
+				ThrowVMException("Build-file have only one word", position, BLDSyntaxException);
 				return;
 			}
 		}
 		buffer.Terminate();
-		if (!strcmp(buffer.ToString(),"_loads") )
+		if (!strcmp(buffer.ToString(), "_loads"))
 		{
 			buffer.Clear();
-			while (current==' ')
+			while (current == ' ')
 			{
 				position++;
 				if (position > input.size())
 				{
-					ThrowVMException("Start of loads struct not found", position, 0);
+					ThrowVMException("Start of loads struct not found", position, BLDSyntaxException);
 					return;
 				}
 				current = input[position];
@@ -178,7 +198,7 @@ void Run( S input) {
 					position++;
 					if (position > input.size())
 					{
-						ThrowVMException("End of loads struct not found", position, 0);
+						ThrowVMException("End of loads struct not found", position, BLDSyntaxException);
 						return;
 					}
 					current = input[position];
@@ -219,17 +239,17 @@ void Run( S input) {
 				//end parse loads
 			} else
 			{
-				ThrowVMException("Start of loads struct not found", position, 0);
+				ThrowVMException("Start of loads struct not found", position, BLDSyntaxException);
 			}
-		} else if (!strcmp(buffer.ToString(),"stack") )
+		} else if (!strcmp(buffer.ToString(), "stack"))
 		{
 			buffer.Clear();
-			while (current==' ')
+			while (current == ' ')
 			{
 				position++;
 				if (position > input.size())
 				{
-					ThrowVMException("Start of stack not found", position, 0);
+					ThrowVMException("Start of stack not found", position, BLDSyntaxException);
 					return;
 				}
 				current = input[position];
@@ -243,7 +263,7 @@ cycle:
 					position++;
 					if (position > input.size())
 					{
-						ThrowVMException("End of stack not found", position, 0);
+						ThrowVMException("End of stack not found", position, BLDSyntaxException);
 						return;
 					}
 					current = input[position];
@@ -254,21 +274,21 @@ cycle:
 					current = input[position];
 					goto cycle;
 				}
-//				mainstack.Add(Stack.Parse(buffer.ToString().Trim()));
+				//				mainstack.Add(Stack.Parse(buffer.ToString().Trim()));
 			} else
 			{
-				ThrowVMException("Start of stack not found", position, 0);
+				ThrowVMException("Start of stack not found", position, BLDSyntaxException);
 			}
 			position--;
 		} else if (!strcmp(buffer.ToString(), "main"))
 		{
 			buffer.Clear();
-			while (current==' ')
+			while (current == ' ')
 			{
 				position++;
 				if (position > input.size())
 				{
-					ThrowVMException("Start of script not found", position, 0);
+					ThrowVMException("Start of script not found", position, BLDSyntaxException);
 					return;
 				}
 				current = input[position];
@@ -281,40 +301,40 @@ cycle:
 					position++;
 					if (position > input.size())
 					{
-						ThrowVMException("End of script not found", position, 0);
+						ThrowVMException("End of script not found", position, BLDSyntaxException);
 						return;
 					}
 					current = input[position];
 				}
-//				Script.Parse(buffer.ToString().Trim().Remove(0, 1));
+				//				Script.Parse(buffer.ToString().Trim().Remove(0, 1));
 			} else
 			{
-				ThrowVMException("Start of script not found", position, 0);
+				ThrowVMException("Start of script not found", position, BLDSyntaxException);
 			}
-		} else if (!strcmp(buffer.ToString(),"end") )
+		} else if (!strcmp(buffer.ToString(), "end"))
 		{
 			if (test)
 			{
 				//test stack
-				cout<<("Info about program in the end.\nMain stack:");
-//				cout<<(mainstack.ToString());
-				cout<<("Expressions:");
-//				foreach(string expr_name in expressions.Keys) {
-//					cout<<(expr_name);
-//				}
-				cout<<("Time of program: {Environment.TickCount - time}");
+				cout << ("Info about program in the end.\nMain stack:");
+				//				cout<<(mainstack.ToString());
+				cout << ("Expressions:");
+				//				foreach(string expr_name in expressions.Keys) {
+				//					cout<<(expr_name);
+				//				}
+				cout << ("Time of program: {Environment.TickCount - time}");
 			}
 			return;
-		} else if (!strcmp("}", buffer.ToString()) )
+		} else if (!strcmp("}", buffer.ToString()))
 		{
 			position++;
 			continue;
 		} else
 		{
-			ThrowVMException("Unknown keyword {buffer.ToString()}", position, 0);
+			ThrowVMException("Unknown keyword {buffer.ToString()}", position, BLDSyntaxException);
 		}
 	}
 }
-void ThrowVMException(string message, int position, I type) {
-	cout << "Exception in position{" << position << "}" << message << endl;
+void ThrowVMException(string message, int position, ExceptionType type) {
+	cout <<type<< "Exception in position{" << position << "}" << message << endl;
 }
