@@ -1,3 +1,10 @@
+/* 
+ * File:   newsimpletest.cpp
+ * Author: papa
+ *
+ * Created on 22.02.2020, 15:28:17
+ */
+
 #include <stdlib.h>
 #include <iostream>
 #include "utilMacr.h"
@@ -5,7 +12,7 @@
 #define buf_for_itlwm_keyword 10
 class StringBuilder {
 public :
-	l buff[buf_for_itlwm_keyword];
+	cc buff[buf_for_itlwm_keyword];
 	I ind;
 	StringBuilder() {
 		ind = 0;
