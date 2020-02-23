@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /* 
  * File:   SB.h
  * Author: papa

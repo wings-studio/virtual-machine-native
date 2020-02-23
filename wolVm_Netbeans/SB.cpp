@@ -48,4 +48,7 @@
 		//--------------------------------------------------------------------------
 		return buff_n;
 	}
+	I StringBuilder::StringBuilder::Len() {
+	return strlen(this->buff);
+	}
 
