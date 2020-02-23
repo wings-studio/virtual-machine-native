@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* 
  * File:   SB.h
  * Author: papa
@@ -26,3 +27,4 @@ public :
 	l * Trim();
 };
 #endif	/* SB_H */
+

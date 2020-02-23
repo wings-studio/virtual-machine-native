@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* 
  * File:   main_app.cpp
  * Author: papa

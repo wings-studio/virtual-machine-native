@@ -10,6 +10,12 @@
 #include "utilMacr.h"
 #include "SB.h"
 using namespace std;
+/*(!)
+ * рус: Основная идея, выполнение промежуточного текстового языка так называемого
+ * ITLWM(Intermediate text language of Wol Vm)
+ * en: The main idea is execution of intermidiate text language as we call ITLWM(Intermediate text language of Wol Vm)
+ * 
+ */
 class Stack {
 };
 /* рус: Метод где мы анализиреум исходный код ITLWM(Intermediate text language
@@ -22,6 +28,8 @@ class Stack {
  * Execution
  * @param input исходный код itlwm типа строки | source code of itlwm as string
  */
+
+
 void Run(S input) {
 	StringBuilder buffer;
 	//main cycle
@@ -213,13 +221,5 @@ cycle:
 		{
 			ThrowVMException("Unknown keyword {buffer.ToString()}", position, BLDSyntaxException);
 		}
-	}
-}
-void testRun() {
-	string input1 = "_loads { wolSystem }";
-	Run(input1);
-	if (true /*check result*/)
-	{
-		std::cout << "%TEST_FAILED% time=0 testname=testRun (run) message=error message sample" << std::endl;
 	}
 }
