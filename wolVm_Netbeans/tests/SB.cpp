@@ -1,6 +1,9 @@
+#include <stdlib.h>
+#include <iostream>
+#include "utilMacr.h"
 #include "SB.h"
 #include <string.h>
-#define buf_for_itlwm_keyword 10
+#define buf_for_itlwm_keyword 50
 
 StringBuilder::StringBuilder() {
 	ind = 0;
@@ -8,6 +11,7 @@ StringBuilder::StringBuilder() {
 
 v StringBuilder::Append(l char_) {
 	buff[ind] = char_;
+	buff[ind+1]='\0';
 	ind++;
 }
 
@@ -33,7 +37,7 @@ I StringBuilder::Len() {
 	return strlen(this->buff);
 }
 
-l* StringBuilder::Trim() {// удаляет пробелы | delete whitespaces
+l* StringBuilder::Trim() {// СѓРґР°Р»СЏРµС‚ РїСЂРѕР±РµР»С‹ | delete whitespaces
 	I ws_cn_before = 0;
 	I le_cn = 0;
 	I count_where_beg_ri_ws = 0;
@@ -55,8 +59,6 @@ l* StringBuilder::Trim() {// удаляет пробелы | delete whitespaces
 }
 
 
-
-
 /*
  * Simple C++ Test Suite
  */
@@ -73,10 +75,8 @@ void testAppend() {
 	stringBuilder.Append(char_2);
 
 	char char_3 = 'c';
-	//	StringBuilder stringBuilder;
 	stringBuilder.Append(char_3);
 
-	stringBuilder.Terminate();
 	l* str = stringBuilder.ToString();
 	if (strcmp(str, "abc") /*check result*/)
 	{
@@ -98,7 +98,7 @@ void testAppend() {
 //void StringBuilder::Remove(int b, int e);
 
 void testRemove() {
-	
+
 	char char_1 = 'a';
 	StringBuilder stringBuilder;
 	stringBuilder.Append(char_1);
@@ -111,7 +111,7 @@ void testRemove() {
 	//	StringBuilder stringBuilder;
 	stringBuilder.Append(char_3);
 	stringBuilder.RemoveFirst();
-	if (!strcmp(stringBuilder.ToString(),"bc"));
+	if (!strcmp(stringBuilder.ToString(), "bc"));
 	{
 		std::cout << "%TEST_FAILED% time=0 testname=testRemove (newsimpletest) message=error message sample" << std::endl;
 	}
@@ -170,12 +170,11 @@ void testTrim() {
 	char char_3 = 'c';
 	//	StringBuilder stringBuilder;
 	stringBuilder.Append(char_3);
-	
+
 	stringBuilder.Append(char_01);
 	stringBuilder.Append(char_02);
 	stringBuilder.Append(char_03);
 
-	stringBuilder.Terminate();
 	l* str = stringBuilder.ToString();
 	char* result = stringBuilder.Trim();
 	if (strcmp(result, "abc"))

@@ -65,7 +65,7 @@ void Run(S input) {
 				return;
 			}
 		}
-		buffer.Terminate();
+//		buffer.Terminate();
 		if (!strcmp(buffer.ToString(), "_loads"))
 		{
 			buffer.Clear();
@@ -241,16 +241,16 @@ void ThrowVMException(string message, int position, ExceptionType type) {
 	cout << type << "Exception in position{" << position << "}" << message << endl;
 }
 
-int main(int argc, char** argv) {
-	std::cout << "%SUITE_STARTING% run" << std::endl;
-	std::cout << "%SUITE_STARTED%" << std::endl;
-
-	std::cout << "%TEST_STARTED% testRun (run)" << std::endl;
-	testRun();
-	std::cout << "%TEST_FINISHED% time=0 testRun (run)" << std::endl;
-
-	std::cout << "%SUITE_FINISHED% time=0" << std::endl;
-
-	return(EXIT_SUCCESS);
-}
+//int main(int argc, char** argv) {
+//	std::cout << "%SUITE_STARTING% run" << std::endl;
+//	std::cout << "%SUITE_STARTED%" << std::endl;
+//
+//	std::cout << "%TEST_STARTED% testRun (run)" << std::endl;
+//	testRun();
+//	std::cout << "%TEST_FINISHED% time=0 testRun (run)" << std::endl;
+//
+//	std::cout << "%SUITE_FINISHED% time=0" << std::endl;
+//
+//	return(EXIT_SUCCESS);
+//}
 
