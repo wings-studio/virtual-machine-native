@@ -22,8 +22,9 @@ public :
 	v Append(l char_);
 	l * ToString();
 	v Clear();
+	//@DEprecated
 	v Terminate();
-	l* RemoveFirst();
+	v Remove(I b,I e);
 	I Len();
 	l * Trim();
 };

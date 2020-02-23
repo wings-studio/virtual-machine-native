@@ -6,41 +6,45 @@
  */
 #include "utilMacr.h"
 #include "SB.h"
-
 StringBuilder::StringBuilder() {
 	ind = 0;
 }
-
 v StringBuilder::Append(l char_) {
 	buff[ind] = char_;
 	buff[ind + 1] = '\0';
 	ind++;
 }
-
-
 l * StringBuilder::ToString() {
 	return buff;
 }
-
 I Len() {
 	return strlen(this->buff);
 }
-
 v StringBuilder::Clear() {
 	ind = 0;
 }
-
 // @Depricated
 v StringBuilder::Terminate() {
 	buff[ind + 1] = '\0';
 }
-
-v StringBuilder::RemoveFirst(I b, I e) {
-	strcpy(buff_n, (char*) (&this->ToString()[1]));
-	strcpy(buff, buff_n);
-	return buff_n;
+v StringBuilder::Remove(I b, I e){
+    I end_s=strlen(buff);
+    I pos=0;
+    I pos_n=0;
+    for (int i=b;i<e;i++)
+       buff[i]='\0',
+       pos++;
+    for(int i=0;i<end_s;i++)
+       if(buff[i]=='\0')
+           continue;
+       else
+          buff_n[pos_n]=buff[i],
+          pos_n++;
+    int i;
+    for ( i=0;i<pos_n;i++)
+      buff[i]=buff_n[i];
+    buff[i+1]='\0';
 }
-
 l* StringBuilder::Trim() {// удаляет пробелы | delete whitespaces
 	I ws_cn_before = 0;
 	I le_cn = 0;

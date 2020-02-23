@@ -9,6 +9,7 @@
 #include "hedVm.h"
 #include "utilMacr.h"
 #include "SB.h"
+#include <stdio.h>
 
 using namespace std;
 
@@ -33,13 +34,16 @@ v add_t(S str_) {
 }
 
 void Run(S input) {
+	printf("Run\n");
+	
 	StringBuilder buffer;
 	//main cycle
 	I position = 0;
 	char current = input[0];
 	bool test = true;
 	while (position < input.size())
-	{
+	{  
+		printf("position: %d\n",position);
 		while (current == ' ') //skip whitespaces
 		{
 			position++;
@@ -93,9 +97,10 @@ void Run(S input) {
 					}
 					current = input[position];
 				}
-				buffer.RemoveFirst();
+				buffer.Remove(0,1);
 				//start parse loads
 				l* dllSource = buffer.ToString();
+				printf("_loads br %s\n",dllSource);
 				/*
 				Type mainType = typeof(VMLibrary);
 				List<string> dllNames = dllSource.Split(';').ToList();
@@ -241,16 +246,16 @@ void ThrowVMException(string message, int position, ExceptionType type) {
 	cout << type << "Exception in position{" << position << "}" << message << endl;
 }
 
-//int main(int argc, char** argv) {
-//	std::cout << "%SUITE_STARTING% run" << std::endl;
-//	std::cout << "%SUITE_STARTED%" << std::endl;
-//
-//	std::cout << "%TEST_STARTED% testRun (run)" << std::endl;
-//	testRun();
-//	std::cout << "%TEST_FINISHED% time=0 testRun (run)" << std::endl;
-//
-//	std::cout << "%SUITE_FINISHED% time=0" << std::endl;
-//
-//	return(EXIT_SUCCESS);
-//}
+int main(int argc, char** argv) {
+	std::cout << "%SUITE_STARTING% run" << std::endl;
+	std::cout << "%SUITE_STARTED%" << std::endl;
+
+	std::cout << "%TEST_STARTED% testRun (run)" << std::endl;
+	testRun();
+	std::cout << "%TEST_FINISHED% time=0 testRun (run)" << std::endl;
+
+	std::cout << "%SUITE_FINISHED% time=0" << std::endl;
+
+	return(EXIT_SUCCESS);
+}
 

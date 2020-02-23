@@ -27,10 +27,24 @@ v StringBuilder::Terminate() {
 	buff[ind + 1] = '\0';
 }
 
-l* StringBuilder::RemoveFirst() {
-	strcpy(buff_n, (char*) (&this->ToString()[1]));
-	strcpy(buff, buff_n);
-	return buff_n;
+v StringBuilder::Remove(I b,I e) {
+    I end_s=strlen(buff);
+    I pos=0;
+    I pos_n=0;
+    for (int i=b;i<e;i++)
+       buff[i]='\0',
+       pos++;
+    for(int i=0;i<end_s;i++)
+       if(buff[i]=='\0')
+           continue;
+       else
+          buff_n[pos_n]=buff[i],
+          pos_n++;
+    int i;
+    for ( i=0;i<pos_n;i++)
+      buff[i]=buff_n[i];
+    buff[i+1]='\0';
+
 }
 
 I StringBuilder::Len() {
@@ -110,8 +124,8 @@ void testRemove() {
 	char char_3 = 'c';
 	//	StringBuilder stringBuilder;
 	stringBuilder.Append(char_3);
-	stringBuilder.RemoveFirst();
-	if (!strcmp(stringBuilder.ToString(), "bc"));
+	stringBuilder.Remove(0,1);
+	if (strcmp(stringBuilder.ToString(), "bc"));
 	{
 		std::cout << "%TEST_FAILED% time=0 testname=testRemove (newsimpletest) message=error message sample" << std::endl;
 	}
@@ -183,41 +197,41 @@ void testTrim() {
 	}
 }
 
-int main(int argc, char** argv) {
-	std::cout << "%SUITE_STARTING% newsimpletest" << std::endl;
-	std::cout << "%SUITE_STARTED%" << std::endl;
-
-	std::cout << "%TEST_STARTED% testAppend (newsimpletest)" << std::endl;
-	testAppend();
-	std::cout << "%TEST_FINISHED% time=0 testAppend (newsimpletest)" << std::endl;
-
-	//	std::cout << "%TEST_STARTED% testClear (newsimpletest)" << std::endl;
-	//	testClear();
-	//	std::cout << "%TEST_FINISHED% time=0 testClear (newsimpletest)" << std::endl;
-
-		std::cout << "%TEST_STARTED% testRemove (newsimpletest)" << std::endl;
-		testRemove();
-	//	std::cout << "%TEST_FINISHED% time=0 testRemove (newsimpletest)" << std::endl;
-
-	//	std::cout << "%TEST_STARTED% testStringBuilder (newsimpletest)" << std::endl;
-	//	testStringBuilder();
-	//	std::cout << "%TEST_FINISHED% time=0 testStringBuilder (newsimpletest)" << std::endl;
-
-	std::cout << "%TEST_STARTED% testTerminate (newsimpletest)" << std::endl;
-	testTerminate();
-	//	std::cout << "%TEST_FINISHED% time=0 testTerminate (newsimpletest)" << std::endl;
-
-	//	std::cout << "%TEST_STARTED% testToString (newsimpletest)" << std::endl;
-	//	testToString();
-	//	std::cout << "%TEST_FINISHED% time=0 testToString (newsimpletest)" << std::endl;
-
-	std::cout << "%TEST_STARTED% testTrim (newsimpletest)" << std::endl;
-	testTrim();
-	//	std::cout << "%TEST_FINISHED% time=0 testTrim (newsimpletest)" << std::endl;
-
-	std::cout << "%SUITE_FINISHED% time=0" << std::endl;
-
-	return(EXIT_SUCCESS);
-}
+//int main(int argc, char** argv) {
+//	std::cout << "%SUITE_STARTING% newsimpletest" << std::endl;
+//	std::cout << "%SUITE_STARTED%" << std::endl;
+//
+//	std::cout << "%TEST_STARTED% testAppend (newsimpletest)" << std::endl;
+//	testAppend();
+//	std::cout << "%TEST_FINISHED% time=0 testAppend (newsimpletest)" << std::endl;
+//
+//	//	std::cout << "%TEST_STARTED% testClear (newsimpletest)" << std::endl;
+//	//	testClear();
+//	//	std::cout << "%TEST_FINISHED% time=0 testClear (newsimpletest)" << std::endl;
+//
+//		std::cout << "%TEST_STARTED% testRemove (newsimpletest)" << std::endl;
+//		testRemove();
+//	//	std::cout << "%TEST_FINISHED% time=0 testRemove (newsimpletest)" << std::endl;
+//
+//	//	std::cout << "%TEST_STARTED% testStringBuilder (newsimpletest)" << std::endl;
+//	//	testStringBuilder();
+//	//	std::cout << "%TEST_FINISHED% time=0 testStringBuilder (newsimpletest)" << std::endl;
+//
+//	std::cout << "%TEST_STARTED% testTerminate (newsimpletest)" << std::endl;
+//	testTerminate();
+//	//	std::cout << "%TEST_FINISHED% time=0 testTerminate (newsimpletest)" << std::endl;
+//
+//	//	std::cout << "%TEST_STARTED% testToString (newsimpletest)" << std::endl;
+//	//	testToString();
+//	//	std::cout << "%TEST_FINISHED% time=0 testToString (newsimpletest)" << std::endl;
+//
+//	std::cout << "%TEST_STARTED% testTrim (newsimpletest)" << std::endl;
+//	testTrim();
+//	//	std::cout << "%TEST_FINISHED% time=0 testTrim (newsimpletest)" << std::endl;
+//
+//	std::cout << "%SUITE_FINISHED% time=0" << std::endl;
+//
+//	return(EXIT_SUCCESS);
+//}
 
 

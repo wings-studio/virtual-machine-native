@@ -34,3 +34,4 @@ typedef enum  {
  */
 void Run(string input);
 void ThrowVMException(string message, int position, ExceptionType type);
+
