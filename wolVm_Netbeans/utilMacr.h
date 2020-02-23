@@ -4,11 +4,9 @@
  *
  * Created on 3 февраля 2020 г., 21:54
  */
-
 #ifndef UTILMACR_H
 #define	UTILMACR_H
 #define c(f,id){debug==DEBUG?printf("%s\n",id),f:f;} 
-
 #define for_in(from,to)\
 for(int cn=from;cn<to;cn++)
 #define $ {
@@ -31,9 +29,9 @@ printf("in func->%s\n",func);printf("var->%s\n",var);
 #define check_s(i,max_buf,func,var) if(i>max_buf){lbr;ms0;_e_(func,var);rbr;}
 #define is_null_ptrErr(op,func,var) if(op==NULL) {lbr;ne0;_e_(func,var);rbr;exit(-10);}
 #endif	/* UTILMACR_H */
-
 #define I int
 #define R float
 #define D double
 #define S string
-#define c char 
+#define l char
+#define v void

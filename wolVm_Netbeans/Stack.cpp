@@ -5,7 +5,6 @@
 #include <string.h>
 #include "utilMacr.h"
 using namespace std;
-
 typedef enum {
 	//this type throws when ...
 	TypeNotSupportedException, //... when in enum init method and etc.
@@ -27,7 +26,6 @@ typedef enum {
 	ValueException //... value call with parents or any more
 } ExceptionType;
 void ThrowVMException(string message, int position, ExceptionType type);
-
 #define buf_for_itlwm_keyword 10
 class StringBuilder {
 public:
@@ -81,24 +79,20 @@ public:
 	}
 };
 StringBuilder buffer;
-
 class Stack {
 	//	public Dictionary<string, wolClass> classes;
 	//	public Dictionary<string, wolFunction> functions;
 	//	public Dictionary<string, Value> values;
-
 	Stack() {
 		//		classes = new Dictionary<string, wolClass>();
 		//		functions = new Dictionary<string, wolFunction>();
 		//		values = new Dictionary<string, Value>();
 	}
-
 	/// <summary>
 	/// Parsing code of stack and return parsing stack
 	/// </summary>
 	/// <param name="stack_code">Code of stack with open bracket '{'</param>
 	/// <returns></returns>
-
 	Stack Parse(string stack_code) {
 		Stack stack = new Stack();
 		int position = 0;
@@ -197,7 +191,6 @@ start:
 								} catch (exception& ex)
 								{
 									ThrowVMException("Classes`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
-
 								}
 							}
 							buffer.Clear();
@@ -222,7 +215,6 @@ start:
 									} catch (exception& ex)
 									{
 										ThrowVMException("Classes`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
-
 									}
 								}
 								while (current != ' ')
@@ -245,7 +237,6 @@ start:
 									} catch (exception& ex)
 									{
 										ThrowVMException("Classes`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
-
 									}
 								}
 								wolClass newWolClass = new wolClass(className, SecurityModifer.PUBLIC, wolClassType.DEFAULT, "init"); //create class
@@ -309,7 +300,6 @@ start:
 											ThrowVMException("Classes`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 										}
 									}
-
 									foreach(string parent_name in buffer.ToString().Remove(0, 1).Split(',')) {
 										try
 										{
@@ -355,7 +345,6 @@ start:
 												if (current > position)
 													throw runtime_error("");
 												current = stack_code[++position];
-
 											} catch (exception& ex)
 											{
 												ThrowVMException("Classes`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
@@ -450,7 +439,6 @@ constructor:
 																	}
 																}
 																string[] arguments = buffer.ToString().Split(',');
-
 																foreach(string argument in arguments) {
 																	string name = argument.Split(':')[0].Trim();
 																	wolClass type = VirtualMachine.GetWolClass(argument.Split(':')[1].Trim());
@@ -723,7 +711,6 @@ variable:
 															ThrowVMException($"Assigment operator isn`t right in field ('{current}')", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 														} else
 														{
-
 															Value thisVar = Value.VoidValue; //create empty value with parent 'void'
 															position += 2; //skip whitespace
 															current = stack_code[position];
@@ -1071,7 +1058,6 @@ function:
 								ThrowVMException($"Assigment operator isn`t right in fucntion ('{current}')", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 							} else
 							{
-
 								wolFunction func = new wolFunction(); //create empty function
 								position += 2; //skip whitespace
 								current = stack_code[position];
@@ -1128,7 +1114,6 @@ function:
 										}
 									}
 									string[] arguments = buffer.ToString().Split(',');
-
 									foreach(string argument in arguments) {
 										string name = argument.Split(':')[0].Trim();
 										wolClass type = VirtualMachine.GetWolClass(argument.Split(':')[1].Trim());
@@ -1243,7 +1228,6 @@ variable:
 								ThrowVMException("Assigment operator isn`t right in variable", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 							} else
 							{
-
 								Value thisVar = Value.VoidValue; //create empty value with parent 'void'
 								position += 2;
 								current = stack_code[position]; //skip whitespace
@@ -1507,112 +1491,84 @@ variable:
 			return stack;
 		}
 	}
-
 	public
-
 	void Add(Stack stack) {
 		if (stack.classes.Count != 0)
 		{
-
 			foreach(KeyValuePair<string, wolClass> cl in stack.classes) {
 				classes.Add(cl.Key, cl.Value);
 			}
 		}
 		if (stack.functions.Count != 0)
 		{
-
 			foreach(KeyValuePair<string, wolFunction> fn in stack.functions) {
 				functions.Add(fn.Key, fn.Value);
 			}
 		}
 		if (stack.values.Count != 0)
 		{
-
 			foreach(KeyValuePair<string, Value> vl in stack.values) {
 				values.Add(vl.Key, vl.Value);
 			}
 		}
 	}
-
 	public
-
 	void Remove(Value[] elems) {
 		//pass
 	}
-
 	public
-
 	void Dispose() {
 		classes.Clear();
 		functions.Clear();
 		values.Clear();
 	}
-
 	public
-
 	override string ToString() {
 		string str = "";
-
 		foreach(KeyValuePair<string, Value> keyValuePair in values) {
 			str += keyValuePair.Key + ' ' + keyValuePair.Value + '\n';
 		}
-
 		foreach(KeyValuePair<string, wolClass> keyValuePair in classes) {
 			str += keyValuePair.Key + ' ' + keyValuePair.Value + '\n';
 		}
-
 		foreach(KeyValuePair<string, wolFunction> keyValuePair in functions) {
 			str += keyValuePair.Key + ' ' + keyValuePair.Value + '\n';
 		}
 		return str;
 	}
-
 	public
-
 	static Stack operator +(Stack right, Stack left) {
 		Stack ret = new Stack();
 		ret.Add(right);
 		ret.Add(left);
 		return ret;
 	}
-
 	public
-
 	static Stack operator +(Stack right, Dictionary<string, Value> left) {
 		foreach(KeyValuePair<string, Value> vari in left)
 		right.values.Add(vari.Key, vari.Value);
 		return right;
 	}
-
 	public
-
 	static Stack operator +(Stack right, Dictionary<string, wolClass> left) {
 		foreach(KeyValuePair<string, wolClass> vari in left)
 		right.classes.Add(vari.Key, vari.Value);
 		return right;
 	}
-
 	public
-
 	static Stack operator +(Stack right, Dictionary<string, wolFunction> left) {
 		foreach(KeyValuePair<string, wolFunction> vari in left)
 		right.functions.Add(vari.Key, vari.Value);
 		return right;
 	}
-
 	public
-
 	static Stack operator -(Stack right, Dictionary<string, Value> left) {
-
 		foreach(string arg in left.Keys) {
 			right.values.Remove(arg);
 		}
 		return right;
 	}
 }
-
 void ThrowVMException(string message, int position, ExceptionType type) {
 	cout << type << "Exception in position{" << position << "}" << message << endl;
 }
-
-
