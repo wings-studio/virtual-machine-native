@@ -2,7 +2,7 @@
  * File:   main.cpp
  * Author: papa
  *
- * Created on 21 февраля 2020 г., 7:27
+ * Created on 21 пїЅпїЅпїЅпїЅпїЅпїЅпїЅ 2020 пїЅ., 7:27
  */
 #include <iostream>
 #include <cstring>
@@ -97,9 +97,15 @@ void Run(S input) {
 					}
 					current = input[position];
 				}
-				buffer.Remove(0,1);
+				
+//				buffer.Remove(0,1);
 				//start parse loads
 				l* dllSource = buffer.ToString();
+				buffer.Remove(0,1);
+				buffer.Trim();
+					
+//				buffer.Trim();
+//				buffer.Remove(0,1);
 				printf("_loads br %s\n",dllSource);
 				/*
 				Type mainType = typeof(VMLibrary);

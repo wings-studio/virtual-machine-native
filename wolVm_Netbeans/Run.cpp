@@ -83,6 +83,7 @@ void Run(S input) {
 					}
 					current = input[position];
 				}
+				buffer.Trim();
 				buffer.Remove(0,1);
 				//start parse loads
 				l* dllSource = buffer.ToString();

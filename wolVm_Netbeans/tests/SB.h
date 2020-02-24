@@ -9,7 +9,7 @@
 #define	SB_H
 #include "utilMacr.h"
 
-#define buf_for_itlwm_keyword 10
+#define buf_for_itlwm_keyword 25
 /*
  * 
  */
@@ -24,7 +24,7 @@ public :
 	v Clear();
 	//@DEprecated
 	v Terminate();
-	v Remove(I b,I e);
+	l* Remove(I b,I e);
 	I Len();
 	l * Trim();
 };

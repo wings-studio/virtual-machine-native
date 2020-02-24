@@ -3,7 +3,6 @@
 #include "utilMacr.h"
 #include "SB.h"
 #include <string.h>
-#define buf_for_itlwm_keyword 50
 
 StringBuilder::StringBuilder() {
 	ind = 0;
@@ -11,8 +10,7 @@ StringBuilder::StringBuilder() {
 
 v StringBuilder::Append(l char_) {
 	buff[ind] = char_;
-	buff[ind+1]='\0';
-	ind++;
+	buff[++ind] = '\0';
 }
 
 l * StringBuilder::ToString() {
@@ -27,49 +25,38 @@ v StringBuilder::Terminate() {
 	buff[ind + 1] = '\0';
 }
 
-v StringBuilder::Remove(I b,I e) {
-    I end_s=strlen(buff);
-    I pos=0;
-    I pos_n=0;
-    for (int i=b;i<e;i++)
-       buff[i]='\0',
-       pos++;
-    for(int i=0;i<end_s;i++)
-       if(buff[i]=='\0')
-           continue;
-       else
-          buff_n[pos_n]=buff[i],
-          pos_n++;
-    int i;
-    for ( i=0;i<pos_n;i++)
-      buff[i]=buff_n[i];
-    buff[i+1]='\0';
-
+l* StringBuilder::Remove(I b, I e) {
+	I s_len = strlen(buff);
+	I pos = 0;
+	for (int i = 0; i < s_len; i++)
+		if (i >= b && i < e)
+			continue;
+		else
+			buff_n[pos] = buff[i],
+			pos++;
+	buff_n[pos] = '\0';
+	strcpy(buff, buff_n);
 }
 
 I StringBuilder::Len() {
 	return strlen(this->buff);
 }
 
-l* StringBuilder::Trim() {// удаляет пробелы | delete whitespaces
-	I ws_cn_before = 0;
-	I le_cn = 0;
-	I count_where_beg_ri_ws = 0;
+l* StringBuilder::Trim() {// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ | delete whitespaces
+	printf("buff  in Trim beg %s\n", buff);
 	I pos = 0;
-	for (int i = 0; i<this->Len(); i++)
+	I s_len = strlen(buff);
+	int i;
+	for (i = 0; i < (s_len - 1); i++)
 		if (buff[i] == ' ')
-			ws_cn_before += 1;
+			continue;
 		else
-			break;
-	for (int i = 0; i<this->Len(); i++)
-		if (buff[i] != ' ')
-			le_cn++;
-	count_where_beg_ri_ws = ws_cn_before + le_cn;
-	for (int i = ws_cn_before; i < count_where_beg_ri_ws; i++)
-		buff_n[pos] = buff[i],
-		pos++;
-	//--------------------------------------------------------------------------
-	return buff_n;
+			buff_n[pos] =buff[i],
+			pos++,
+			printf("char %c\n",buff[i]), printf("pos %d\n",pos);
+		
+	buff_n[pos] = '\0';
+	strcpy(buff, buff_n);
 }
 
 
@@ -112,20 +99,32 @@ void testAppend() {
 //void StringBuilder::Remove(int b, int e);
 
 void testRemove() {
-
-	char char_1 = 'a';
 	StringBuilder stringBuilder;
+	char char_01 = '{';
+	stringBuilder.Append(char_01);
+	char char_02 = ' ';
+	stringBuilder.Append(char_02);
+	char char_03 = ' ';
+	stringBuilder.Append(char_03);
+	char char_04 = ' ';
+	stringBuilder.Append(char_04);
+
+	char char_1 = 'w';
+
 	stringBuilder.Append(char_1);
 
-	char char_2 = 'b';
-	//	StringBuilder stringBuilder;
+	char char_2 = 'o';
 	stringBuilder.Append(char_2);
 
-	char char_3 = 'c';
-	//	StringBuilder stringBuilder;
+	char char_3 = 'l';
 	stringBuilder.Append(char_3);
-	stringBuilder.Remove(0,1);
-	if (strcmp(stringBuilder.ToString(), "bc"));
+	char char_4 = 'v';
+	stringBuilder.Append(char_4);
+	char char_5 = 'm';
+	stringBuilder.Append(char_5);
+	stringBuilder.Remove(0, 1);
+	//	printf("%s\n",stringBuilder.ToString());
+	if (strcmp(stringBuilder.ToString(), "   wolvm"));
 	{
 		std::cout << "%TEST_FAILED% time=0 testname=testRemove (newsimpletest) message=error message sample" << std::endl;
 	}
@@ -189,9 +188,11 @@ void testTrim() {
 	stringBuilder.Append(char_02);
 	stringBuilder.Append(char_03);
 
-	l* str = stringBuilder.ToString();
+
 	char* result = stringBuilder.Trim();
-	if (strcmp(result, "abc"))
+	printf("%s\n", result);
+
+	if (strcmp(stringBuilder.ToString(), "abc"))
 	{
 		std::cout << "%TEST_FAILED% time=0 testname=testTrim (newsimpletest) message=error message sample" << std::endl;
 	}
@@ -217,8 +218,8 @@ void testTrim() {
 //	//	testStringBuilder();
 //	//	std::cout << "%TEST_FINISHED% time=0 testStringBuilder (newsimpletest)" << std::endl;
 //
-//	std::cout << "%TEST_STARTED% testTerminate (newsimpletest)" << std::endl;
-//	testTerminate();
+////	std::cout << "%TEST_STARTED% testTerminate (newsimpletest)" << std::endl;
+////	testTerminate();
 //	//	std::cout << "%TEST_FINISHED% time=0 testTerminate (newsimpletest)" << std::endl;
 //
 //	//	std::cout << "%TEST_STARTED% testToString (newsimpletest)" << std::endl;
