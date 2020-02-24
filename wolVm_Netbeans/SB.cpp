@@ -6,62 +6,53 @@
  */
 #include "utilMacr.h"
 #include "SB.h"
+#include <string>
+#include <cstring>
 StringBuilder::StringBuilder() {
 	ind = 0;
 }
 v StringBuilder::Append(l char_) {
 	buff[ind] = char_;
-	buff[ind + 1] = '\0';
-	ind++;
+	buff[++ind] = '\0';
 }
 l * StringBuilder::ToString() {
 	return buff;
 }
-I Len() {
-	return strlen(this->buff);
+S StringBuilder::ToStringCpp() {
+	return  std::string(buff);
 }
 v StringBuilder::Clear() {
 	ind = 0;
 }
-// @Depricated
 v StringBuilder::Terminate() {
 	buff[ind + 1] = '\0';
 }
-v StringBuilder::Remove(I b, I e){
-    I end_s=strlen(buff);
-    I pos=0;
-    I pos_n=0;
-    for (int i=b;i<e;i++)
-       buff[i]='\0',
-       pos++;
-    for(int i=0;i<end_s;i++)
-       if(buff[i]=='\0')
-           continue;
-       else
-          buff_n[pos_n]=buff[i],
-          pos_n++;
-    int i;
-    for ( i=0;i<pos_n;i++)
-      buff[i]=buff_n[i];
-    buff[i+1]='\0';
-}
-l* StringBuilder::Trim() {// удаляет пробелы | delete whitespaces
-	I ws_cn_before = 0;
-	I le_cn = 0;
-	I count_where_beg_ri_ws = 0;
+v StringBuilder::Remove(I b, I e) {
+	I s_len = strlen(buff);
 	I pos = 0;
-	for (int i = 0; i<this->Len(); i++)
-		if (buff[i] == ' ')
-			ws_cn_before += 1;
+	for (int i = 0; i < s_len; i++)
+		if (i >= b && i < e)
+			continue;
 		else
-			break;
-	for (int i = 0; i<this->Len(); i++)
-		if (buff[i] != ' ')
-			le_cn++;
-	count_where_beg_ri_ws = ws_cn_before + le_cn;
-	for (int i = ws_cn_before; i < count_where_beg_ri_ws; i++)
-		buff_n[pos] = buff[i],
-		pos++;
-	//--------------------------------------------------------------------------
-	return buff_n;
+			buff_n[pos] = buff[i],
+			pos++;
+	buff_n[pos] = '\0';
+	strcpy(buff, buff_n);
+}
+I StringBuilder::Len() {
+	return strlen(this->buff);
+}
+l* StringBuilder::Trim() {// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ | delete whitespaces
+	I pos = 0;
+	I s_len = strlen(buff);
+	int i;
+	for (i = 0; i < (s_len - 1); i++)
+		if (buff[i] == ' ')
+			continue;
+		else
+			buff_n[pos] =buff[i],
+			pos++;
+	buff_n[pos] = '\0';
+	strcpy(buff, buff_n);
+	return buff;
 }

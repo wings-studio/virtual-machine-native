@@ -8,21 +8,23 @@
 #define	SB_H
 #include "utilMacr.h"
 #define buf_for_itlwm_keyword 10
+
 /*
  * 
  */
 class StringBuilder {
-public :
+public:
 	l buff[buf_for_itlwm_keyword];
 	l buff_n[buf_for_itlwm_keyword];
 	I ind;
 	StringBuilder();
 	v Append(l char_);
 	l * ToString();
+	S ToStringCpp();
 	v Clear();
 	//@Deprecated
 	v Terminate();
-	v Remove(I b,I e);
+	v Remove(I b, I e);
 	I Len();
 	l * Trim();
 };
