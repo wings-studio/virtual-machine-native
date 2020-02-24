@@ -73,17 +73,17 @@ public:
 //
 //		foreach(KeyValuePair<string, Value> keyValuePair in values) {
 //
-//			str += keyValuePair.Key + ' ' + keyValuePair.Value + '\n';
+//			str += keyValuePair.Key + ' ' + keyValuePair.Value + '';
 //		}
 //
 //		foreach(KeyValuePair<string, wolClass> keyValuePair in classes) {
 //
-//			str += keyValuePair.Key + ' ' + keyValuePair.Value + '\n';
+//			str += keyValuePair.Key + ' ' + keyValuePair.Value + '';
 //		}
 //
 //		foreach(KeyValuePair<string, wolFunction> keyValuePair in functions) {
 //
-//			str += keyValuePair.Key + ' ' + keyValuePair.Value + '\n';
+//			str += keyValuePair.Key + ' ' + keyValuePair.Value + '';
 //		}
 //		return str;
 //	}
@@ -147,10 +147,10 @@ Stack Parse(string stack_code) {
 	{
 		try //skip open bracket '{'
 		{
-			current = stack_code[++position];
+			current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 		} catch (exception& ex)
 		{
-			ThrowVMException("End of block not found", /*VM_position -*/ stack_code.size() + position, BLDSyntaxException);
+			ThrowVMException("End of block not found", VM_position - stack_code.size() + position, BLDSyntaxException);
 			return stack;
 		}
 
@@ -161,7 +161,7 @@ start:
 			{
 				try
 				{
-					current = stack_code[++position];
+					current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 				} catch (exception& ex)
 				{
 					ThrowVMException("End of block of stack not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -172,7 +172,7 @@ start:
 				try
 				{
 					buffer.Append(current);
-					current = stack_code[++position];
+					current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 				} catch (exception& ex)
 				{
 					return stack;
@@ -186,7 +186,7 @@ start:
 				{
 					try
 					{
-						current = stack_code[++position];
+						current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 					} catch (exception& ex)
 					{
 						ThrowVMException("Class haven`t block", /*VM_position -*/ stack_code.size() + position, BLDSyntaxException);
@@ -197,12 +197,12 @@ start:
 					while (current != '}')
 					{
 						if (current != ' ' || current == '{')
-							current = stack_code[++position];
+							current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 						while (current != ' ') //skip whitespaces
 						{
 							try
 							{
-								current = stack_code[++position];
+								current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 							} catch (exception& ex)
 							{
 								ThrowVMException("Classes`s end not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -213,18 +213,18 @@ start:
 							try
 							{
 								buffer.Append(current);
-								current = stack_code[++position];
+								current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 							} catch (exception& ex)
 							{
 								ThrowVMException("Classes`s end not found", VM_position - stack_code.size() + position, BLDSyntaxException);
 							}
 						}
-						string className = buffer.ToStringCpp().equal(;
+						string className = buffer.ToStringCpp();
 						while (current != ' ') //skip whitespaces
 						{
 							try
 							{
-								current = stack_code[++position];
+								current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 							} catch (exception& ex)
 							{
 								ThrowVMException("Classes`s end not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -237,7 +237,7 @@ start:
 							{
 								try
 								{
-									current = stack_code[++position];
+									current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 								} catch (exception& ex)
 								{
 									ThrowVMException("Body of class not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -248,7 +248,7 @@ start:
 								try
 								{
 									buffer.Append(current);
-										current = stack_code[++position];
+										current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 								} catch (exception& ex)
 								{
 									ThrowVMException("Classes`s end not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -258,7 +258,7 @@ start:
 							{
 								try
 								{
-									current = stack_code[++position];
+									current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 								} catch (exception& ex)
 								{
 									ThrowVMException("Body of class not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -270,7 +270,7 @@ start:
 								try
 								{
 									buffer.Append(current);
-										current = stack_code[++position];
+										current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 								} catch (exception& ex)
 								{
 									ThrowVMException("Classes`s end not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -279,8 +279,8 @@ start:
 							wolClass newWolClass = new wolClass(className, SecurityModifer.PUBLIC, wolClassType.DEFAULT, "init"); //create class
 							try
 							{
-								newWolClass.classType = (wolClassType) Enum.Parse(typeof(wolClassType), buffer.ToStringCpp().equal(, true); //give type to our class from buffer without case sensetive
-							} catch (Exception)
+								newWolClass.classType = (wolClassType) Enum.Parse(typeof(wolClassType), buffer.ToStringCpp()(, true); //give type to our class from buffer without case sensetive
+							} catch (exception& ex)
 							{
 								ThrowVMException("{buffer.ToStringCpp().equal(} is not class type", VM_position - stack_code.size() + position, BLDSyntaxException);
 							}
@@ -288,7 +288,7 @@ start:
 							{
 								try
 								{
-									current = stack_code[++position];
+									current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 								} catch (exception& ex)
 								{
 									ThrowVMException("End of class not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -300,7 +300,7 @@ start:
 								try
 								{
 									buffer.Append(current);
-										current = stack_code[++position];
+										current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 								} catch (exception& ex)
 								{
 									ThrowVMException("Classes`s end not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -317,7 +317,7 @@ start:
 							{
 								try
 								{
-									current = stack_code[++position];
+									current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 								} catch (exception& ex)
 								{
 									ThrowVMException("End of class not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -331,7 +331,7 @@ start:
 									try
 									{
 										buffer.Append(current);
-											current = stack_code[++position];
+											current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 									} catch (exception& ex)
 									{
 
@@ -348,12 +348,12 @@ start:
 									}
 								}
 							}
-							current = stack_code[++position]; //skip ')'
+							current = stack_code[++position];if(position>stack_code.size()) throw runtime_error(""); //skip ')'
 							while (current == ' ')
 							{
 								try
 								{
-									current = stack_code[++position];
+									current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 								} catch (exception& ex)
 								{
 									ThrowVMException("End of class not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -363,12 +363,12 @@ start:
 							{
 								while (true) //parse class body
 								{
-									current = stack_code[++position]; //skip start of class (':' or '>')
+									current = stack_code[++position];if(position>stack_code.size()) throw runtime_error(""); //skip start of class (':' or '>')
 									while (current != ' ') //skip whitespaces
 									{
 										try
 										{
-											current = stack_code[++position];
+											current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 										} catch (exception& ex)
 										{
 											ThrowVMException("Classes`s end not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -382,7 +382,7 @@ start:
 											buffer.Append(current);
 											if (current > position)
 												throw runtime_error("");
-												current = stack_code[++position];
+												current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 											} catch (exception& ex)
 										{
 											ThrowVMException("Classes`s end not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -394,7 +394,7 @@ start:
 											buffer.Clear();
 											if ((newWolClass.classType == wolClassType.DEFAULT) || newWolClass.classType == wolClassType.STRUCT)
 											{
-												current = stack_code[++position];
+												current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 												if (current != '[') //check open bracket
 												{
 													ThrowVMException("Start of constructors not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -403,12 +403,12 @@ start:
 													while (current != ']')
 													{
 constructor:
-														current = stack_code[++position]; //skip open bracket
+														current = stack_code[++position];if(position>stack_code.size()) throw runtime_error(""); //skip open bracket
 														while (current != ' ') //skip whitespaces
 														{
 															try
 															{
-																current = stack_code[++position];
+																current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 															} catch (exception& ex)
 															{
 																ThrowVMException("Constructor`s end not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -419,7 +419,7 @@ constructor:
 															try
 															{
 																buffer.Append(current);
-																	current = stack_code[++position];
+																	current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 															} catch (exception& ex)
 															{
 																ThrowVMException("Constructor`s name not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -431,7 +431,7 @@ constructor:
 														{
 															try
 															{
-																current = stack_code[++position];
+																current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 															} catch (exception& ex)
 															{
 																ThrowVMException("Constructor`s end not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -450,14 +450,14 @@ constructor:
 																try
 																{
 																	buffer.Append(current);
-																		current = stack_code[++position];
+																		current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																} catch (exception& ex)
 																{
 																	ThrowVMException("Constructor`s end not found", VM_position - stack_code.size() + position, BLDSyntaxException);
 																}
 															}
 															constr.security = (SecurityModifer) Enum.Parse(typeof(SecurityModifer), buffer.ToStringCpp().equal(, true); //write stack modifer to our function
-																current = stack_code[++position]; //skip whitespace
+																current = stack_code[++position];if(position>stack_code.size()) throw runtime_error(""); //skip whitespace
 															if (current == ':')
 															{
 																//start parse block
@@ -465,13 +465,13 @@ constructor:
 															{
 																//start parse constructor arguments
 																buffer.Clear();
-																	current = stack_code[++position];
+																	current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																while (current != ')')
 																{
 																	buffer.Append(current);
 																	try
 																	{
-																		current = stack_code[++position];
+																		current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																	} catch (exception& ex)
 																	{
 
@@ -489,13 +489,13 @@ constructor:
 															{
 																ThrowVMException("Arguments or start of constructor not found", VM_position - stack_code.size() + position, BLDSyntaxException);
 															}
-															current = stack_code[++position];
+															current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																//parse block
 															while (current != ' ') //skip whitespaces
 															{
 																try
 																{
-																	current = stack_code[++position];
+																	current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																} catch (exception& ex)
 																{
 																	ThrowVMException("Start of constructor block not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -504,13 +504,13 @@ constructor:
 															if (current == '[')
 															{
 																buffer.Clear();
-																	current = stack_code[++position];
+																	current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																while (current != ']')
 																{
 																	try
 																	{
 																		buffer.Append(current);
-																			current = stack_code[++position];
+																			current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																	} catch (exception& ex)
 																	{
 																		ThrowVMException("End of block of constructor not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -543,7 +543,7 @@ constructor:
 												{
 													try
 													{
-														current = stack_code[++position];
+														current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 													} catch (exception& ex)
 													{
 														ThrowVMException("Start of methods not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -554,7 +554,7 @@ constructor:
 													ThrowVMException("Start of methods not found", VM_position - stack_code.size() + position, BLDSyntaxException);
 												} else
 												{
-													current = stack_code[++position]; //skip open bracket '['
+													current = stack_code[++position];if(position>stack_code.size()) throw runtime_error(""); //skip open bracket '['
 														function :
 													while (current != ']')
 													{
@@ -562,7 +562,7 @@ constructor:
 														{
 															try
 															{
-																current = stack_code[++position];
+																current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 															} catch (exception& ex)
 															{
 																ThrowVMException("Method`s end not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -573,7 +573,7 @@ constructor:
 															try
 															{
 																buffer.Append(current);
-																	current = stack_code[++position];
+																	current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 															} catch (exception& ex)
 															{
 																ThrowVMException("Method`s name not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -581,7 +581,7 @@ constructor:
 														}
 														string func_name = buffer.ToStringCpp();
 															buffer.Clear();
-															current = stack_code[++position];
+															current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 														if (current != '=') //check assignment operator
 														{
 															ThrowVMException("Assigment operator isn`t right ('{current}') in method", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -595,7 +595,7 @@ constructor:
 																try
 																{
 																	buffer.Append(current);
-																		current = stack_code[++position];
+																		current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																} catch (exception& ex)
 																{
 																	ThrowVMException("Method`s end not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -608,14 +608,14 @@ constructor:
 															{
 																ThrowVMException("{buffer.ToStringCpp()} is not secutiry modifer", VM_position - stack_code.size() + position, BLDSyntaxException);
 															}
-															current = stack_code[++position]; //skip whitespace
+															current = stack_code[++position];if(position>stack_code.size()) throw runtime_error(""); //skip whitespace
 																buffer.Clear();
 															while (current != ' ') //get return type
 															{
 																try
 																{
 																	buffer.Append(current);
-																		current = stack_code[++position];
+																		current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																} catch (exception& ex)
 																{
 																	ThrowVMException("Method`s end not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -633,7 +633,7 @@ constructor:
 															{
 																try
 																{
-																	current = stack_code[++position];
+																	current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																} catch (exception& ex)
 																{
 																	ThrowVMException("Start of arguments or method not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -646,13 +646,13 @@ constructor:
 															{
 																//start parse function arguments
 																buffer.Clear();
-																	current = stack_code[++position]; //skip open paren '('
+																	current = stack_code[++position];if(position>stack_code.size()) throw runtime_error(""); //skip open paren '('
 																while (current != ')')
 																{
 																	try
 																	{
 																		buffer.Append(current);
-																			current = stack_code[++position];
+																			current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																	} catch (exception& ex)
 																	{
 																		ThrowVMException("End of arguments not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -661,17 +661,17 @@ constructor:
 																string[] arguments = buffer.ToStringCpp().Split(',');
 																	//																foreach(string argument in arguments)
 																	//																func.arguments.Add(argument.Split(':')[0].Trim(), VirtualMachine.GetWolClass(argument.Split(':')[1])); //add argumrnt to method
-																	//current = stack_code[++position]; //skip ')'
+																	//current = stack_code[++position];if(position>stack_code.size()) throw runtime_error(""); //skip ')'
 															} else
 															{
 																ThrowVMException("Arguments or start of method not found ('{current}')", VM_position - stack_code.size() + position, BLDSyntaxException);
 															}
-															current = stack_code[++position];
+															current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 															while (current != ' ') //skip whitespaces
 															{
 																try
 																{
-																	current = stack_code[++position];
+																	current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																} catch (exception& ex)
 																{
 																	ThrowVMException("Start of method block not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -680,13 +680,13 @@ constructor:
 															if (current == '[')
 															{
 																buffer.Clear();
-																	current = stack_code[++position];
+																	current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																while (current != ']')
 																{
 																	try
 																	{
 																		buffer.Append(current);
-																			current = stack_code[++position];
+																			current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																	} catch (exception& ex)
 																	{
 																		ThrowVMException("End of block of method not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -702,7 +702,7 @@ constructor:
 													}
 													if (stack_code[++position] == ',')
 													{
-														current = stack_code[++position];
+														current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 															goto function;
 													}
 												}
@@ -715,18 +715,18 @@ constructor:
 												ThrowVMException("Enum don`t support variables", VM_position - stack_code.size() + position, TypeNotSupportedException);
 											} else
 											{
-												current = stack_code[++position]; //skip whitespace
+												current = stack_code[++position];if(position>stack_code.size()) throw runtime_error(""); //skip whitespace
 												if (current == '[')
 												{
 													while (current != ']')
 													{
 variable:
-														current = stack_code[++position]; //skip '[' or other character
+														current = stack_code[++position];if(position>stack_code.size()) throw runtime_error(""); //skip '[' or other character
 														while (current != ' ') //skip whitespaces
 														{
 															try
 															{
-																current = stack_code[++position];
+																current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 															} catch (exception& ex)
 															{
 																ThrowVMException("Variable`s end not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -737,7 +737,7 @@ variable:
 															try
 															{
 																buffer.Append(current);
-																	current = stack_code[++position];
+																	current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 															} catch (exception& ex)
 															{
 																ThrowVMException("Variable`s name not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -745,7 +745,7 @@ variable:
 														}
 														string var_name = buffer.ToStringCpp();
 															buffer.Clear();
-															current = stack_code[++position];
+															current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 														if (current != '=') //check assignment operator
 														{
 															ThrowVMException("Assigment operator isn`t right in field ('{current}')", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -759,7 +759,7 @@ variable:
 																try
 																{
 																	buffer.Append(current);
-																		current = stack_code[++position];
+																		current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																} catch (exception& ex)
 																{
 																	ThrowVMException("Field`s end not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -773,13 +773,13 @@ variable:
 																//don`t need now throw vm exception becouse in GetWolClass was throw exception
 															}
 															buffer.Clear();
-																current = stack_code[++position]; //skip whitespace
+																current = stack_code[++position];if(position>stack_code.size()) throw runtime_error(""); //skip whitespace
 																//															while (current != ' ') //get security modifer
 																//															{
 																//																try
 																//																{
 																//																	buffer.Append(current);
-																//																	current = stack_code[++position];
+																//																	current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																//																} catch (exception& ex)
 																//																{
 																//																	ThrowVMException("Field`s end not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -793,14 +793,14 @@ variable:
 																//															{
 																//																ThrowVMException("{buffer.ToStringCpp()} is not security modifer of setter (getter)", VM_position - stack_code.size() + position, BLDSyntaxException);
 																//															}
-																current = stack_code[++position]; //skip whitespace
+																current = stack_code[++position];if(position>stack_code.size()) throw runtime_error(""); //skip whitespace
 																buffer.Clear();
 															while (current != ' ') //get name - 'set' or 'get'
 															{
 																try
 																{
 																	buffer.Append(current);
-																		current = stack_code[++position];
+																		current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																} catch (exception& ex)
 																{
 																	ThrowVMException("Field`s end not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -809,18 +809,18 @@ variable:
 															if (buffer.ToStringCpp().equal("set"))
 															{
 																//																stackVar.setter.security = security;
-																current = stack_code[++position]; //skip whitespace
+																current = stack_code[++position];if(position>stack_code.size()) throw runtime_error(""); //skip whitespace
 																if (current == '(')
 																{
 																	//start parse setter arguments
 																	buffer.Clear();
-																		current = stack_code[++position];
+																		current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																	while (current != ')')
 																	{
 																		buffer.Append(current);
 																		try
 																		{
-																			current = stack_code[++position];
+																			current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																		} catch (exception& ex)
 																		{
 																			ThrowVMException("End of arguments not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -838,13 +838,13 @@ variable:
 																{
 																	ThrowVMException("Arguments or start of setter not found", VM_position - stack_code.size() + position, BLDSyntaxException);
 																}
-																current = stack_code[++position];
+																current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																	//parse block
 																while (current != ' ') //skip whitespaces
 																{
 																	try
 																	{
-																		current = stack_code[++position];
+																		current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																	} catch (exception& ex)
 																	{
 																		ThrowVMException("Start of setter block not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -853,13 +853,13 @@ variable:
 																if (current == '[')
 																{
 																	buffer.Clear();
-																		current = stack_code[++position];
+																		current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																	while (current != ']')
 																	{
 																		try
 																		{
 																			buffer.Append(current);
-																				current = stack_code[++position];
+																				current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																		} catch (exception& ex)
 																		{
 																			ThrowVMException("End of block of fields not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -870,12 +870,12 @@ variable:
 																{
 																	ThrowVMException("Start of block not found", VM_position - stack_code.size() + position, BLDSyntaxException);
 																}
-																current = stack_code[++position]; //skip ']'
+																current = stack_code[++position];if(position>stack_code.size()) throw runtime_error(""); //skip ']'
 																while (current != ' ')
 																{
 																	try
 																	{
-																		current = stack_code[++position];
+																		current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																	} catch (exception& ex)
 																	{
 																		ThrowVMException("Getter security not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -887,7 +887,7 @@ variable:
 																	try
 																	{
 																		buffer.Append(current);
-																			current = stack_code[++position];
+																			current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																	} catch (exception& ex)
 																	{
 																		ThrowVMException("Getter security not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -904,7 +904,7 @@ variable:
 																{
 																	try
 																	{
-																		current = stack_code[++position];
+																		current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																	} catch (exception& ex)
 																	{
 																		ThrowVMException("Getter not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -916,7 +916,7 @@ variable:
 																	try
 																	{
 																		buffer.Append(current);
-																			current = stack_code[++position];
+																			current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																	} catch (exception& ex)
 																	{
 																		ThrowVMException("Getter not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -930,13 +930,13 @@ variable:
 															{
 																ThrowVMException("Unknown keyword {buffer.ToStringCpp()}", VM_position - stack_code.size() + position, BLDSyntaxException);
 															}
-															current = stack_code[++position];
+															current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																//parse block
 															while (current != ' ') //skip whitespaces
 															{
 																try
 																{
-																	current = stack_code[++position];
+																	current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																} catch (exception& ex)
 																{
 																	ThrowVMException("Start of getter block not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -945,13 +945,13 @@ variable:
 															if (current == '[')
 															{
 																buffer.Clear();
-																	current = stack_code[++position];
+																	current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																while (current != ']')
 																{
 																	try
 																	{
 																		buffer.Append(current);
-																			current = stack_code[++position];
+																			current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																	} catch (exception& ex)
 																	{
 																		ThrowVMException("End of block of fields not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -980,7 +980,7 @@ variable:
 											//												{
 											//													try
 											//													{
-											//														current = stack_code[++position];
+											//														current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 											//													} catch (exception& ex)
 											//													{
 											//														ThrowVMException("Start of constants not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -992,7 +992,7 @@ variable:
 											//													{
 											//														try
 											//														{
-											//															current = stack_code[++position];
+											//															current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 											//														} catch (exception& ex)
 											//														{
 											//															ThrowVMException("End of constants block not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -1038,7 +1038,7 @@ variable:
 						{
 							try
 							{
-								current = stack_code[++position];
+								current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 							} catch (exception& ex)
 							{
 								ThrowVMException("End of classes not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -1057,7 +1057,7 @@ variable:
 				{
 					try
 					{
-						current = stack_code[++position];
+						current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 					} catch (exception& ex)
 					{
 						ThrowVMException("Functions is empty", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -1068,12 +1068,12 @@ variable:
 					while (current != '}')
 					{
 function:
-						current = stack_code[++position]; //skip '{'
+						current = stack_code[++position];if(position>stack_code.size()) throw runtime_error(""); //skip '{'
 						while (current != ' ') //skip whitespaces
 						{
 							try
 							{
-								current = stack_code[++position];
+								current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 							} catch (exception& ex)
 							{
 								ThrowVMException("Function`s end not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -1084,7 +1084,7 @@ function:
 							try
 							{
 								buffer.Append(current);
-									current = stack_code[++position];
+									current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 							} catch (exception& ex)
 							{
 								ThrowVMException("Function`s name not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -1092,7 +1092,7 @@ function:
 						}
 						string func_name = buffer.ToStringCpp();
 							buffer.Clear();
-							current = stack_code[++position];
+							current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 						if (current != '=') //check assignment operator
 						{
 							ThrowVMException("Assigment operator isn`t right in fucntion ('{current}')", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -1106,21 +1106,21 @@ function:
 								try
 								{
 									buffer.Append(current);
-										current = stack_code[++position];
+										current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 								} catch (exception& ex)
 								{
 									ThrowVMException("Function`s end not found", VM_position - stack_code.size() + position, BLDSyntaxException);
 								}
 							}
 							func.security = (SecurityModifer) Enum.Parse(typeof(SecurityModifer), buffer.ToStringCpp().equal(, true); //write stack modifer to our function
-								current = stack_code[++position]; //skip whitespace
+								current = stack_code[++position];if(position>stack_code.size()) throw runtime_error(""); //skip whitespace
 								buffer.Clear();
 							while (current != ' ') //get return type
 							{
 								try
 								{
 									buffer.Append(current);
-										current = stack_code[++position];
+										current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 								} catch (exception& ex)
 								{
 									ThrowVMException("Function`s end not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -1133,7 +1133,7 @@ function:
 							{
 								//don`t need now throw vm exception becouse in GetWolClass was throw exception
 							}
-							current = stack_code[++position]; //skip whitespace
+							current = stack_code[++position];if(position>stack_code.size()) throw runtime_error(""); //skip whitespace
 							if (current == ':')
 							{
 								//start parse block
@@ -1141,13 +1141,13 @@ function:
 							{
 								//start parse function arguments
 								buffer.Clear();
-									current = stack_code[++position];
+									current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 								while (current != ')')
 								{
 									buffer.Append(current);
 									try
 									{
-										current = stack_code[++position];
+										current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 									} catch (exception& ex)
 									{
 
@@ -1165,13 +1165,13 @@ function:
 							{
 								ThrowVMException("Arguments or start of function not found ('{current}')", VM_position - stack_code.size() + position, BLDSyntaxException);
 							}
-							current = stack_code[++position];
+							current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 								//parse block
 							while (current != ' ') //skip whitespaces
 							{
 								try
 								{
-									current = stack_code[++position];
+									current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 								} catch (exception& ex)
 								{
 									ThrowVMException("Start of function block not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -1180,13 +1180,13 @@ function:
 							if (current == '[')
 							{
 								buffer.Clear();
-									current = stack_code[++position];
+									current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 								while (current != ']')
 								{
 									try
 									{
 										buffer.Append(current);
-											current = stack_code[++position];
+											current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 									} catch (exception& ex)
 									{
 										ThrowVMException("End of block of function not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -1194,18 +1194,18 @@ function:
 								}
 								func.body = buffer.ToStringCpp();
 									stack.functions.Add(func_name, func);
-									current = stack_code[++position]; //skip ']' (peek next char)
+									current = stack_code[++position];if(position>stack_code.size()) throw runtime_error(""); //skip ']' (peek next char)
 									buffer.Clear();
 								if (current == ',')
 								{
-									current = stack_code[++position]; //skip ','
+									current = stack_code[++position];if(position>stack_code.size()) throw runtime_error(""); //skip ','
 										goto function;
 								}
 								while (current != ' ')
 								{
 									try
 									{
-										current = stack_code[++position];
+										current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 									} catch (exception& ex)
 									{
 										ThrowVMException("End of functions not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -1228,7 +1228,7 @@ function:
 				{
 					try
 					{
-						current = stack_code[++position];
+						current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 					} catch (exception& ex)
 					{
 						ThrowVMException("Variables is empty", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -1239,12 +1239,12 @@ function:
 					while (current != '}')
 					{
 variable:
-						current = stack_code[++position]; //skip '{'
+						current = stack_code[++position];if(position>stack_code.size()) throw runtime_error(""); //skip '{'
 						while (current != ' ') //skip whitespaces
 						{
 							try
 							{
-								current = stack_code[++position];
+								current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 							} catch (exception& ex)
 							{
 								ThrowVMException("Variable`s end not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -1255,7 +1255,7 @@ variable:
 							try
 							{
 								buffer.Append(current);
-									current = stack_code[++position];
+									current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 							} catch (exception& ex)
 							{
 								ThrowVMException("Variable`s name not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -1263,7 +1263,7 @@ variable:
 						}
 						string var_name = buffer.ToStringCpp();
 							buffer.Clear();
-							current = stack_code[++position];
+							current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 						if (current != '=') //check assignment operator
 						{
 							ThrowVMException("Assigment operator isn`t right in variable", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -1278,7 +1278,7 @@ variable:
 								try
 								{
 									buffer.Append(current);
-										current = stack_code[++position];
+										current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 								} catch (exception& ex)
 								{
 									ThrowVMException("Variable`s end not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -1293,13 +1293,13 @@ variable:
 								//don`t need now throw vm exception becouse in GetWolClass was throw exception
 							}
 							buffer.Clear();
-								current = stack_code[++position];
+								current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 							while (current != ' ') //get security modifer
 							{
 								try
 								{
 									buffer.Append(current);
-										current = stack_code[++position];
+										current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 								} catch (exception& ex)
 								{
 									ThrowVMException("Variable`s end not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -1313,14 +1313,14 @@ variable:
 							//								{
 							//									ThrowVMException("{buffer.ToStringCpp().equal(} is not security modifer", VM_position - stack_code.size() + position, ExceptionType.NotFoundException);
 							//								}
-							current = stack_code[++position]; //skip whitespace
+							current = stack_code[++position];if(position>stack_code.size()) throw runtime_error(""); //skip whitespace
 								buffer.Clear();
 							while (current != ' ') //get name - 'set' or 'get'
 							{
 								try
 								{
 									buffer.Append(current);
-										current = stack_code[++position];
+										current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 								} catch (exception& ex)
 								{
 									ThrowVMException("Variable`s end not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -1329,18 +1329,18 @@ variable:
 							if (buffer.ToStringCpp().equal("set"))
 							{
 								stackVar.setter.security = security;
-									current = stack_code[++position];
+									current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 								if (current == '(')
 								{
 									//start parse setter arguments
 									buffer.Clear();
-										current = stack_code[++position];
+										current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 									while (current != ')')
 									{
 										buffer.Append(current);
 										try
 										{
-											current = stack_code[++position];
+											current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 										} catch (exception& ex)
 										{
 											ThrowVMException("End of arguments not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -1358,13 +1358,13 @@ variable:
 								{
 									ThrowVMException("Arguments or start of setter not found", VM_position - stack_code.size() + position, BLDSyntaxException);
 								}
-								current = stack_code[++position];
+								current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 									//parse block
 								while (current != ' ') //skip whitespaces
 								{
 									try
 									{
-										current = stack_code[++position];
+										current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 									} catch (exception& ex)
 									{
 										ThrowVMException("Start of setter block not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -1373,13 +1373,13 @@ variable:
 								if (current == '[')
 								{
 									buffer.Clear();
-										current = stack_code[++position];
+										current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 									while (current != ']')
 									{
 										try
 										{
 											buffer.Append(current);
-												current = stack_code[++position];
+												current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 										} catch (exception& ex)
 										{
 											ThrowVMException("End of block of variables not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -1390,12 +1390,12 @@ variable:
 								{
 									ThrowVMException("Start of setter block not found", VM_position - stack_code.size() + position, BLDSyntaxException);
 								}
-								current = stack_code[++position]; //skip ']'
+								current = stack_code[++position];if(position>stack_code.size()) throw runtime_error(""); //skip ']'
 								while (current != ' ')
 								{
 									try
 									{
-										current = stack_code[++position];
+										current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 									} catch (exception& ex)
 									{
 										ThrowVMException("Getter security not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -1407,7 +1407,7 @@ variable:
 									try
 									{
 										buffer.Append(current);
-											current = stack_code[++position];
+											current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 									} catch (exception& ex)
 									{
 										ThrowVMException("Getter security not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -1424,7 +1424,7 @@ variable:
 								{
 									try
 									{
-										current = stack_code[++position];
+										current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 									} catch (exception& ex)
 									{
 										ThrowVMException("Getter not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -1436,7 +1436,7 @@ variable:
 									try
 									{
 										buffer.Append(current);
-											current = stack_code[++position];
+											current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 									} catch (exception& ex)
 									{
 										ThrowVMException("Getter not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -1451,13 +1451,13 @@ variable:
 								if (buffer.ToStringCpp().equal( != "get") {
 									ThrowVMException("Unknown keyword {buffer.ToStringCpp().equal(}", VM_position - stack_code.size() + position, BLDSyntaxException);
 								}
-							current = stack_code[++position];
+							current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 								//parse block
 							while (current != ' ') //skip whitespaces
 							{
 								try
 								{
-									current = stack_code[++position];
+									current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 								} catch (exception& ex)
 								{
 									ThrowVMException("Start of getter block not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -1466,13 +1466,13 @@ variable:
 							if (current == '[')
 							{
 								buffer.Clear();
-									current = stack_code[++position];
+									current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 								while (current != ']')
 								{
 									try
 									{
 										buffer.Append(current);
-											current = stack_code[++position];
+											current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 									} catch (exception& ex)
 									{
 										ThrowVMException("End of block of variables not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -1486,17 +1486,17 @@ variable:
 							//Console.WriteLine("Var name: " + var_name);
 							//Console.WriteLine("Setter: " + stackVar.setter.body);
 							stack->values.Add(var_name, stackVar);
-								current = stack_code[++position]; //skip ']'
+								current = stack_code[++position];if(position>stack_code.size()) throw runtime_error(""); //skip ']'
 							if (current == ',')
 							{
-								current = stack_code[++position];
+								current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 									goto variable;
 							}
 							while (current != ' ')
 							{
 								try
 								{
-									current = stack_code[++position];
+									current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 								} catch (exception& ex)
 								{
 									ThrowVMException("End of functions not found", VM_position - stack_code.size() + position, BLDSyntaxException);
@@ -1517,7 +1517,7 @@ variable:
 			{
 				if (stack_code[++position] == ';')
 				{
-					current = stack_code[++position]; //skip semicolon
+					current = stack_code[++position];if(position>stack_code.size()) throw runtime_error(""); //skip semicolon
 						goto start;
 				}
 			} catch (exception& ex)
