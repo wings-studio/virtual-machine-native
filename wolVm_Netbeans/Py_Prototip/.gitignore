@@ -44,3 +44,6 @@ wolvm/wolvm.cbp
 *.back
 *.bac
 *bak
+
+.idea/
+venv/

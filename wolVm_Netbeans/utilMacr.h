@@ -72,5 +72,4 @@ printf("in func->%s\n",func);printf("var->%s\n",var);
 #define D double
 #define S string
 #define l char
->>>>>>> 327bcd8ea223c395c6fbf7d2c2f39f6b9bcbd51e
 #define v void
