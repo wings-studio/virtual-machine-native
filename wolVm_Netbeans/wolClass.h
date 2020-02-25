@@ -8,6 +8,7 @@
 #define	WOLCLASS_H
 #include <map>
 #include <vector>
+#include <string>
 #include <SecurityModifer.h>
 using namespace std;
 class wolClass {
@@ -24,12 +25,15 @@ public:
 	SecurityModifer security;
 	wolClassType classType;
 	string strtype;
-};
-enum wolClassType {
-	DEFAULT,
-	STATIC,
-	STRUCT,
-	ENUM,
-	ABSTRACT
+	wolClass(string name, SecurityModifer sec, wolClassType type, string);
+	 string ToString();
+	/// <summary>
+	/// Implement all parents
+	/// </summary>
+	void Implements() ;
+	wolClass ToParentClass(string parent_name) ;
+	wolFunction GetStaticMethod(string name) ;
+	Value GetStaticField(string name) ;
+	void CallDestructor(int index,  Value[] args);
 };
 #endif	/* WOLCLASS_H */

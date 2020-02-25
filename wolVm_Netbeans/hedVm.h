@@ -6,6 +6,9 @@
  */
 #ifndef HEDVM_H
 #define	HEDVM_H
+#include <vector>
+#include <map>
+#include "wolClass.h"
 using namespace std;
 typedef enum  {
 	//this type throws when ...
@@ -27,10 +30,11 @@ typedef enum  {
 	FormatException, //... parsing not valid string (to any type)
 	ValueException //... value call with parents or any more
 }ExceptionType;
-/**
- * Выполняет скрипт | Execute script
- * @param input строка кода itlwm | string of code itlwm
- */
-void Run(string input);
-void ThrowVMException(string message, int position, ExceptionType type);
+typedef enum  {
+	DEFAULT,
+	STATIC,
+	STRUCT,
+	ENUM,
+	ABSTRACT
+}wolClassType;
 #endif	/* HEDVM_H */
