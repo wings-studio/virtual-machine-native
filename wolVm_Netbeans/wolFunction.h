@@ -9,15 +9,15 @@
 #include <wolClass.h>
 #include <string>
 #include <map>
+#include "SecurityModifer.h"
 using namespace std;
 class wolFunction {
 public:
-//	public: SecurityModifer security;
-	public: wolClass returnType;
-	public: map <string, wolClass> arguments;
-	public: string body;
-	public: bool close = false;
-	public:
+	 SecurityModifer security;
+	 wolClass returnType;
+	 map <string, wolClass> arguments;
+	 string body;
+	 bool close = false;
 	wolFunction(SecurityModifer sec = SecurityModifer.PRIVATE, string _body = "return <null:void>;");
 	wolFunction(SecurityModifer sec = SecurityModifer.PRIVATE,  KeyValuePair<string, wolClass>[] args);
         wolFunction NewDefaultConstructor(wolClass type,  KeyValuePair<string, wolClass>[] args);

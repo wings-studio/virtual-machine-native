@@ -10,6 +10,7 @@
 #include <string>
 using namespace std;
 class Stack {
+public :
 	map<string, wolClass> classes;
 	map<string, wolFunction> functions;
 	map<string, Value> values;

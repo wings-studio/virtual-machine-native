@@ -8,7 +8,7 @@
 #define	WOLCLASS_H
 #include <map>
 #include <vector>
-//#include <SecurityModifer.h>
+#include <SecurityModifer.h>
 using namespace std;
 class wolClass {
 public:
@@ -16,20 +16,13 @@ public:
 	virtual ~wolClass();
 	wolClass(const wolClass& other);
 	wolClass& operator=(const wolClass& other);
-	//        SecurityModifer security;
-public:
+        SecurityModifer security;
 	map<string, wolFunction> methods, constructors;
-public:
 	vector<wolFunction> destructors;
-public:
 	map<string, Value> fields, constants, static_fields;
-public:
 	map<string, wolClass> parents;
-public:
 	SecurityModifer security;
-public:
 	wolClassType classType;
-public:
 	string strtype;
 };
 enum wolClassType {
