@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /* 
  * File:   hedVm.h
  * Author: papa
@@ -34,3 +33,4 @@ typedef enum  {
  */
 void Run(string input);
 void ThrowVMException(string message, int position, ExceptionType type);
+#endif	/* HEDVM_H */

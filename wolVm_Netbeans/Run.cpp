@@ -22,52 +22,52 @@ class Stack {
  * Execution
  * @param input исходный код itlwm типа строки | source code of itlwm as string
  */
+extern StringBuilder buffer;
+I VM_position=0;
 void Run(S input) {
-	StringBuilder buffer;
 	//main cycle
-	I position = 0;
+//	I VM_position = 0;
 	char current = input[0];
 	bool test = true;
-	while (position < input.size())
+	while (VM_position < input.size())
 	{
 		while (current == ' ') //skip whitespaces
 		{
-			position++;
-			if (position > input.size())
+			VM_position++;
+			if (VM_position > input.size())
 			{
-				ThrowVMException("Build-file have only whitespaces", position, BLDSyntaxException);
+				ThrowVMException("Build-file have only whitespaces", VM_position, BLDSyntaxException);
 				return;
 			}
-			current = input[position];
+			current = input[VM_position];
 		}
 		while (current != ' ') //get word
 		{
 			buffer.Append(current);
-			position++;
+			VM_position++;
 			try
 			{
-				if (position > input.size())
+				if (VM_position > input.size())
 					throw runtime_error("");
-				current = input[position];
+				current = input[VM_position];
 			} catch (exception& ex)
 			{
-				ThrowVMException("Build-file have only one word", position, BLDSyntaxException);
+				ThrowVMException("Build-file have only one word", VM_position, BLDSyntaxException);
 				return;
 			}
 		}
-		buffer.Terminate();
 		if (!strcmp(buffer.ToString(), "_loads"))
 		{
 			buffer.Clear();
 			while (current == ' ')
 			{
-				position++;
-				if (position > input.size())
+				VM_position++;
+				if (VM_position > input.size())
 				{
-					ThrowVMException("Start of loads struct not found", position, BLDSyntaxException);
+					ThrowVMException("Start of loads struct not found", VM_position, BLDSyntaxException);
 					return;
 				}
-				current = input[position];
+				current = input[VM_position];
 			}
 			if (current == '{')
 			{
@@ -75,13 +75,13 @@ void Run(S input) {
 				while (current != '}') //get loads body
 				{
 					buffer.Append(current);
-					position++;
-					if (position > input.size())
+					VM_position++;
+					if (VM_position > input.size())
 					{
-						ThrowVMException("End of loads struct not found", position, BLDSyntaxException);
+						ThrowVMException("End of loads struct not found", VM_position, BLDSyntaxException);
 						return;
 					}
-					current = input[position];
+					current = input[VM_position];
 				}
 				buffer.Trim();
 				buffer.Remove(0,1);
@@ -98,7 +98,7 @@ void Run(S input) {
 						assembly = Assembly.LoadFrom(full_path);
 					} catch (exception& ex)
 					{
-						ThrowVMException("Library with info {full_path} not found.\n{ex.Message}", position, ExceptionType.FileNotFoundException);
+						ThrowVMException("Library with info {full_path} not found.\n{ex.Message}", VM_position, ExceptionType.FileNotFoundException);
 						break;
 					}
 					Type mainClass = assembly.GetTypes().FirstOrDefault(t = > t != mainType && mainType.IsAssignableFrom(t));
@@ -111,29 +111,29 @@ void Run(S input) {
 					if (mainClass != null)
 					{
 						if (Activator.CreateInstance(mainClass) is VMLibrary mainObj) mainObj.Load();
-						else ThrowVMException("Main class in library by name {dllName} haven`t type VMLibrary and will cannot loaded", position, ExceptionType.LoadsException);
+						else ThrowVMException("Main class in library by name {dllName} haven`t type VMLibrary and will cannot loaded", VM_position, ExceptionType.LoadsException);
 					} else
 					{
-						ThrowVMException("Library by name {dllName} haven`t main class and will cannot loaded", position, ExceptionType.LoadsException);
+						ThrowVMException("Library by name {dllName} haven`t main class and will cannot loaded", VM_position, ExceptionType.LoadsException);
 					}
 				}*/
 				//end parse loads
 			} else
 			{
-				ThrowVMException("Start of loads struct not found", position, BLDSyntaxException);
+				ThrowVMException("Start of loads struct not found", VM_position, BLDSyntaxException);
 			}
 		} else if (!strcmp(buffer.ToString(), "stack"))
 		{
 			buffer.Clear();
 			while (current == ' ')
 			{
-				position++;
-				if (position > input.size())
+				VM_position++;
+				if (VM_position > input.size())
 				{
-					ThrowVMException("Start of stack not found", position, BLDSyntaxException);
+					ThrowVMException("Start of stack not found", VM_position, BLDSyntaxException);
 					return;
 				}
-				current = input[position];
+				current = input[VM_position];
 			}
 			if (current == '{')
 			{
@@ -141,56 +141,56 @@ cycle:
 				while (current != '}') //get stack body
 				{
 					buffer.Append(current);
-					position++;
-					if (position > input.size())
+					VM_position++;
+					if (VM_position > input.size())
 					{
-						ThrowVMException("End of stack not found", position, BLDSyntaxException);
+						ThrowVMException("End of stack not found", VM_position, BLDSyntaxException);
 						return;
 					}
-					current = input[position];
+					current = input[VM_position];
 				}
-				if (input[++position] == ';')
+				if (input[++VM_position] == ';')
 				{
 					buffer.Append(current);
-					current = input[position];
+					current = input[VM_position];
 					goto cycle;
 				}
 				//				mainstack.Add(Stack.Parse(buffer.ToString().Trim()));
 			} else
 			{
-				ThrowVMException("Start of stack not found", position, BLDSyntaxException);
+				ThrowVMException("Start of stack not found", VM_position, BLDSyntaxException);
 			}
-			position--;
+			VM_position--;
 		} else if (!strcmp(buffer.ToString(), "main"))
 		{
 			buffer.Clear();
 			while (current == ' ')
 			{
-				position++;
-				if (position > input.size())
+				VM_position++;
+				if (VM_position > input.size())
 				{
-					ThrowVMException("Start of script not found", position, BLDSyntaxException);
+					ThrowVMException("Start of script not found", VM_position, BLDSyntaxException);
 					return;
 				}
-				current = input[position];
+				current = input[VM_position];
 			}
 			if (current == '{')
 			{
 				while (current != '}') //get script
 				{
 					buffer.Append(current);
-					position++;
-					if (position > input.size())
+					VM_position++;
+					if (VM_position > input.size())
 					{
-						ThrowVMException("End of script not found", position, BLDSyntaxException);
+						ThrowVMException("End of script not found", VM_position, BLDSyntaxException);
 						return;
 					}
-					current = input[position];
+					current = input[VM_position];
 				}
 				//				Script.Parse(buffer.ToString().Trim().Remove(0, 1));
 			} else
 			{
-				ThrowVMException("Start of script not found", position, BLDSyntaxException);
+				ThrowVMException("Start of script not found", VM_position, BLDSyntaxException);
 			}
 		} else if (!strcmp(buffer.ToString(), "end"))
 		{
@@ -208,11 +208,11 @@ cycle:
 			return;
 		} else if (!strcmp("}", buffer.ToString()))
 		{
-			position++;
+			VM_position++;
 			continue;
 		} else
 		{
-			ThrowVMException("Unknown keyword {buffer.ToString()}", position, BLDSyntaxException);
+			ThrowVMException("Unknown keyword {buffer.ToString()}", VM_position, BLDSyntaxException);
 		}
 	}
 }

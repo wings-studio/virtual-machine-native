@@ -8,7 +8,6 @@
 #define	SB_H
 #include "utilMacr.h"
 #define buf_for_itlwm_keyword 10
-
 /*
  * 
  */
