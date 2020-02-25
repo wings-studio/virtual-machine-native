@@ -11,6 +11,7 @@
 #include "wolFunction.h"
 #include "wolClass.h"
 #include "Stack.h"
+#include "VirtualMachine.h"
 /*(!)
  * рус: Основная идея, выполнение промежуточного текстового языка так называемого
  * ITLWM(Intermediate text language of Wol Vm)
@@ -35,6 +36,7 @@ wolFunction wolFunction_o;
 Value value;
 Stack stack();
 StringBuilder buffer;
+VirtualMachine VirtualMachine;
 int main(int argc, char* argv[]) {
 	if (argc == 1)
 		cout << info;
