@@ -11,5 +11,6 @@ class VirtualMachine{
 public :
 	VirtualMachine();
 	void Run(S input);
+	ThrowVMException(string message, int position, ExceptionType type);
 };
 #endif	/* VIRTUALMACHINE_H */

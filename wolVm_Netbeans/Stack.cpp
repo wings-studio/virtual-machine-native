@@ -110,7 +110,7 @@ Stack Stack::Parse(string stack_code) {
 			if (position > stack_code.size()) throw runtime_error("");
 		} catch (exception& ex)
 		{
-			ThrowVMException("End of block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+			VirtualMachine.ThrowVMException("End of block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 			return this;
 		}
 start:
@@ -124,7 +124,7 @@ start:
 					if (position > stack_code.size()) throw runtime_error("");
 				} catch (exception& ex)
 				{
-					ThrowVMException("End of block of stack not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+					VirtualMachine.ThrowVMException("End of block of stack not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 				}
 			}
 			while (current != ' ') //get keyword
@@ -137,7 +137,7 @@ start:
 				} catch (exception& ex)
 				{
 					return this;
-					//ThrowVMException("End of block of stack not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+					//VirtualMachine.ThrowVMException("End of block of stack not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 				}
 			}
 			if (buffer.ToStringCpp().equal("class"))
@@ -151,7 +151,7 @@ start:
 						if (position > stack_code.size()) throw runtime_error("");
 					} catch (exception& ex)
 					{
-						ThrowVMException("Class haven`t block", /*VirtualMachine.position -*/ stack_code.size() + position, BLDSyntaxException);
+						VirtualMachine.ThrowVMException("Class haven`t block", /*VirtualMachine.position -*/ stack_code.size() + position, BLDSyntaxException);
 					}
 				}
 				if (current == '{')
@@ -169,7 +169,7 @@ start:
 								if (position > stack_code.size()) throw runtime_error("");
 							} catch (exception& ex)
 							{
-								ThrowVMException("Classes`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+								VirtualMachine.ThrowVMException("Classes`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 							}
 						}
 						while (current != ' ') //get name of class
@@ -181,7 +181,7 @@ start:
 								if (position > stack_code.size()) throw runtime_error("");
 							} catch (exception& ex)
 							{
-								ThrowVMException("Classes`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+								VirtualMachine.ThrowVMException("Classes`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 							}
 						}
 						string className = buffer.ToStringCpp();
@@ -193,7 +193,7 @@ start:
 								if (position > stack_code.size()) throw runtime_error("");
 							} catch (exception& ex)
 							{
-								ThrowVMException("Classes`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+								VirtualMachine.ThrowVMException("Classes`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 							}
 						}
 						buffer.Clear();
@@ -207,7 +207,7 @@ start:
 									if (position > stack_code.size()) throw runtime_error("");
 								} catch (exception& ex)
 								{
-									ThrowVMException("Body of class not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+									VirtualMachine.ThrowVMException("Body of class not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 								}
 							}
 							while (current != ' ') //get '='
@@ -219,7 +219,7 @@ start:
 									if (position > stack_code.size()) throw runtime_error("");
 								} catch (exception& ex)
 								{
-									ThrowVMException("Classes`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+									VirtualMachine.ThrowVMException("Classes`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 								}
 							}
 							while (current != ' ')
@@ -230,7 +230,7 @@ start:
 									if (position > stack_code.size()) throw runtime_error("");
 								} catch (exception& ex)
 								{
-									ThrowVMException("Body of class not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+									VirtualMachine.ThrowVMException("Body of class not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 								}
 							}
 							buffer.Clear();
@@ -243,7 +243,7 @@ start:
 									if (position > stack_code.size()) throw runtime_error("");
 								} catch (exception& ex)
 								{
-									ThrowVMException("Classes`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+									VirtualMachine.ThrowVMException("Classes`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 								}
 							}
 							wolClass newWolClass = new wolClass(className, SecurityModifer.PUBLIC, wolClassType.DEFAULT, "init"); //create class
@@ -252,7 +252,7 @@ start:
 								newWolClass.classType = (wolClassType) Enum.Parse(typeof(wolClassType), buffer.ToStringCpp()(, true); //give type to our class from buffer without case sensetive
 							} catch (exception& ex)
 							{
-								ThrowVMException("{buffer.ToStringCpp().equal(} is not class type", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+								VirtualMachine.ThrowVMException("{buffer.ToStringCpp().equal(} is not class type", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 							}
 							while (current != ' ')
 							{
@@ -261,7 +261,7 @@ start:
 									current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 									} catch (exception& ex)
 								{
-									ThrowVMException("End of class not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+									VirtualMachine.ThrowVMException("End of class not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 								}
 							}
 							buffer.Clear();
@@ -273,7 +273,7 @@ start:
 										current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 									} catch (exception& ex)
 								{
-									ThrowVMException("Classes`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+									VirtualMachine.ThrowVMException("Classes`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 								}
 							}
 							try
@@ -281,7 +281,7 @@ start:
 								newWolClass.security = (SecurityModifer) Enum.Parse(typeof(SecurityModifer), buffer.ToStringCpp().equal(, true);
 							} catch (Exception)
 							{
-								ThrowVMException("{buffer.ToStringCpp().equal(} is not security modifer", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+								VirtualMachine.ThrowVMException("{buffer.ToStringCpp().equal(} is not security modifer", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 							}
 							while (current != ' ')
 							{
@@ -290,7 +290,7 @@ start:
 									current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 									} catch (exception& ex)
 								{
-									ThrowVMException("End of class not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+									VirtualMachine.ThrowVMException("End of class not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 								}
 							}
 							if (current == '(')
@@ -304,7 +304,7 @@ start:
 											current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 										} catch (exception& ex)
 									{
-										ThrowVMException("Classes`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+										VirtualMachine.ThrowVMException("Classes`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 									}
 								}
 								foreach(string parent_name in buffer.ToStringCpp().equal(.Remove(0, 1).Split(',')) {
@@ -325,7 +325,7 @@ start:
 										current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 										} catch (exception& ex)
 									{
-										ThrowVMException("End of class not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+										VirtualMachine.ThrowVMException("End of class not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 									}
 								}
 							if ((current == ':') || (current == '>')) //check start of class
@@ -340,7 +340,7 @@ start:
 												current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 												} catch (exception& ex)
 											{
-												ThrowVMException("Classes`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+												VirtualMachine.ThrowVMException("Classes`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 											}
 										}
 									buffer.Clear();
@@ -354,7 +354,7 @@ start:
 												current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 												} catch (exception& ex)
 										{
-											ThrowVMException("Classes`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+											VirtualMachine.ThrowVMException("Classes`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 										}
 									}
 									switch (buffer.ToStringCpp()) {
@@ -365,7 +365,7 @@ start:
 											current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 												if (current != '[') //check open bracket
 												{
-													ThrowVMException("Start of constructors not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+													VirtualMachine.ThrowVMException("Start of constructors not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 												} else
 												{
 													while (current != ']')
@@ -379,7 +379,7 @@ constructor:
 																	current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																	} catch (exception& ex)
 																{
-																	ThrowVMException("Constructor`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																	VirtualMachine.ThrowVMException("Constructor`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																}
 															}
 														while (current != ' ') //get constructor name
@@ -390,7 +390,7 @@ constructor:
 																	current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																} catch (exception& ex)
 															{
-																ThrowVMException("Constructor`s name not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																VirtualMachine.ThrowVMException("Constructor`s name not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 															}
 														}
 														string constrnanme = buffer.ToStringCpp().equal(;
@@ -402,12 +402,12 @@ constructor:
 																current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																} catch (exception& ex)
 															{
-																ThrowVMException("Constructor`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																VirtualMachine.ThrowVMException("Constructor`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 															}
 														}
 														if (current != '=') //check assignment operator
 														{
-															ThrowVMException("Assigment operator isn`t right in constructor {current}", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+															VirtualMachine.ThrowVMException("Assigment operator isn`t right in constructor {current}", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 														} else
 														{
 															//															wolFunction constr = wolFunction.NewDefaultConstructor(newWolClass); //create empty constructor template
@@ -421,7 +421,7 @@ constructor:
 																		current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																	} catch (exception& ex)
 																{
-																	ThrowVMException("Constructor`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																	VirtualMachine.ThrowVMException("Constructor`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																}
 															}
 															constr.security = (SecurityModifer) Enum.Parse(typeof(SecurityModifer), buffer.ToStringCpp().equal(, true); //write stack modifer to our function
@@ -442,7 +442,7 @@ constructor:
 																				current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																				} catch (exception& ex)
 																			{
-																				ThrowVMException("End of arguments not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																				VirtualMachine.ThrowVMException("End of arguments not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																			}
 																		}
 																	string[] arguments = buffer.ToStringCpp().equal(.Split(',');
@@ -454,7 +454,7 @@ constructor:
 																	//start parse block
 																} else
 																{
-																	ThrowVMException("Arguments or start of constructor not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																	VirtualMachine.ThrowVMException("Arguments or start of constructor not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																}
 															current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																//parse block
@@ -465,7 +465,7 @@ constructor:
 																		current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																		} catch (exception& ex)
 																	{
-																		ThrowVMException("Start of constructor block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																		VirtualMachine.ThrowVMException("Start of constructor block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																	}
 																}
 															if (current == '[')
@@ -480,7 +480,7 @@ constructor:
 																				current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																			} catch (exception& ex)
 																		{
-																			ThrowVMException("End of block of constructor not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																			VirtualMachine.ThrowVMException("End of block of constructor not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																		}
 																	}
 																constr.body = buffer.ToStringCpp().equal(;
@@ -489,21 +489,21 @@ constructor:
 																if (stack_code[++position] == ',') goto constructor;
 																} else
 															{
-																ThrowVMException("Start of block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																VirtualMachine.ThrowVMException("Start of block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 															}
 														}
 													}
 												}
 										} else
 										{
-											ThrowVMException("{newWolClass.classType.ToString().ToLower()} don`t support constructors", VirtualMachine.position - stack_code.size() + position, ExceptionType.TypeNotSupportedException);
+											VirtualMachine.ThrowVMException("{newWolClass.classType.ToString().ToLower()} don`t support constructors", VirtualMachine.position - stack_code.size() + position, ExceptionType.TypeNotSupportedException);
 										}
 										break;
 									case "func":
 										buffer.Clear();
 										if (newWolClass.classType == wolClassType.ENUM)
 										{
-											ThrowVMException("Enum don`t support methods", VirtualMachine.position - stack_code.size() + position, ExceptionType.TypeNotSupportedException);
+											VirtualMachine.ThrowVMException("Enum don`t support methods", VirtualMachine.position - stack_code.size() + position, ExceptionType.TypeNotSupportedException);
 										} else
 										{
 											while (current != ' ') //skip whitespaces
@@ -513,12 +513,12 @@ constructor:
 													current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 													} catch (exception& ex)
 												{
-													ThrowVMException("Start of methods not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+													VirtualMachine.ThrowVMException("Start of methods not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 												}
 											}
 											if (current != '[') //check open bracket
 											{
-												ThrowVMException("Start of methods not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+												VirtualMachine.ThrowVMException("Start of methods not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 											} else
 											{
 												current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error(""); //skip open bracket '['
@@ -532,7 +532,7 @@ constructor:
 																current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																} catch (exception& ex)
 															{
-																ThrowVMException("Method`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																VirtualMachine.ThrowVMException("Method`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 															}
 														}
 														while (current != ' ') //get method name
@@ -543,7 +543,7 @@ constructor:
 																	current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																} catch (exception& ex)
 															{
-																ThrowVMException("Method`s name not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																VirtualMachine.ThrowVMException("Method`s name not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 															}
 														}
 														string func_name = buffer.ToStringCpp();
@@ -551,7 +551,7 @@ constructor:
 															current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 															if (current != '=') //check assignment operator
 															{
-																ThrowVMException("Assigment operator isn`t right ('{current}') in method", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																VirtualMachine.ThrowVMException("Assigment operator isn`t right ('{current}') in method", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 															} else
 															{
 																//															wolFunction func = new wolFunction(); //create empty function
@@ -565,7 +565,7 @@ constructor:
 																			current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																		} catch (exception& ex)
 																	{
-																		ThrowVMException("Method`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																		VirtualMachine.ThrowVMException("Method`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																	}
 																}
 																try
@@ -573,7 +573,7 @@ constructor:
 																	//																func.security = (SecurityModifer) Enum.Parse(typeof(SecurityModifer), buffer.ToStringCpp().equal(, true); //write stack modifer to our function
 																} catch (exception& ex)
 																{
-																	ThrowVMException("{buffer.ToStringCpp()} is not secutiry modifer", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																	VirtualMachine.ThrowVMException("{buffer.ToStringCpp()} is not secutiry modifer", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																}
 																current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error(""); //skip whitespace
 																	buffer.Clear();
@@ -585,7 +585,7 @@ constructor:
 																				current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																			} catch (exception& ex)
 																		{
-																			ThrowVMException("Method`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																			VirtualMachine.ThrowVMException("Method`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																		}
 																	}
 																try
@@ -593,7 +593,7 @@ constructor:
 																	//																func.returnType = VirtualMachine.GetWolClass(buffer.ToStringCpp();
 																} catch (exception& ex)
 																{
-																	//ThrowVMException("")
+																	//VirtualMachine.ThrowVMException("")
 																	//don`t need now throw vm exception becouse in GetWolClass was throw exception
 																}
 																while (current != ' ') //skip whitespaces
@@ -603,7 +603,7 @@ constructor:
 																		current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																		} catch (exception& ex)
 																	{
-																		ThrowVMException("Start of arguments or method not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																		VirtualMachine.ThrowVMException("Start of arguments or method not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																	}
 																}
 																if (current == ':')
@@ -622,7 +622,7 @@ constructor:
 																					current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																				} catch (exception& ex)
 																			{
-																				ThrowVMException("End of arguments not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																				VirtualMachine.ThrowVMException("End of arguments not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																			}
 																		}
 																	string[] arguments = buffer.ToStringCpp().Split(',');
@@ -631,7 +631,7 @@ constructor:
 																		//current = stack_code[++position];if(position>stack_code.size()) throw runtime_error(""); //skip ')'
 																} else
 																{
-																	ThrowVMException("Arguments or start of method not found ('{current}')", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																	VirtualMachine.ThrowVMException("Arguments or start of method not found ('{current}')", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																}
 																current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																	while (current != ' ') //skip whitespaces
@@ -641,7 +641,7 @@ constructor:
 																			current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																			} catch (exception& ex)
 																		{
-																			ThrowVMException("Start of method block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																			VirtualMachine.ThrowVMException("Start of method block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																		}
 																	}
 																if (current == '[')
@@ -656,14 +656,14 @@ constructor:
 																					current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																				} catch (exception& ex)
 																			{
-																				ThrowVMException("End of block of method not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																				VirtualMachine.ThrowVMException("End of block of method not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																			}
 																		}
 																	//																func.body = buffer.ToStringCpp().Trim();
 																	//																newWolClass.methods.Add(func_name, func);
 																} else
 																{
-																	ThrowVMException("Start of block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																	VirtualMachine.ThrowVMException("Start of block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																}
 															}
 													}
@@ -679,7 +679,7 @@ constructor:
 										buffer.Clear();
 										if (/*newWolClass.classType == wolClassType.ENUM*/)
 										{
-											ThrowVMException("Enum don`t support variables", VirtualMachine.position - stack_code.size() + position, TypeNotSupportedException);
+											VirtualMachine.ThrowVMException("Enum don`t support variables", VirtualMachine.position - stack_code.size() + position, TypeNotSupportedException);
 										} else
 										{
 											current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error(""); //skip whitespace
@@ -696,7 +696,7 @@ variable:
 																	current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																	} catch (exception& ex)
 																{
-																	ThrowVMException("Variable`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																	VirtualMachine.ThrowVMException("Variable`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																}
 															}
 														while (current != ' ') //get variable name
@@ -707,7 +707,7 @@ variable:
 																	current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																} catch (exception& ex)
 															{
-																ThrowVMException("Variable`s name not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																VirtualMachine.ThrowVMException("Variable`s name not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 															}
 														}
 														string var_name = buffer.ToStringCpp();
@@ -715,7 +715,7 @@ variable:
 															current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 															if (current != '=') //check assignment operator
 															{
-																ThrowVMException("Assigment operator isn`t right in field ('{current}')", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																VirtualMachine.ThrowVMException("Assigment operator isn`t right in field ('{current}')", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 															} else
 															{
 																//															Value stackVar = Value.VoidValue; //create empty value with parent 'void'
@@ -729,7 +729,7 @@ variable:
 																			current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																		} catch (exception& ex)
 																	{
-																		ThrowVMException("Field`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																		VirtualMachine.ThrowVMException("Field`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																	}
 																}
 																try
@@ -749,7 +749,7 @@ variable:
 																	//																	current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 																	//																} catch (exception& ex)
 																	//																{
-																	//																	ThrowVMException("Field`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																	//																	VirtualMachine.ThrowVMException("Field`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																	//																}
 																	//															}
 																	//															SecurityModifer security = SecurityModifer.PRIVATE;
@@ -758,7 +758,7 @@ variable:
 																	////																security = (SecurityModifer) Enum.Parse(typeof(SecurityModifer), buffer.ToStringCpp()(, true); //write stack modifer to our variable
 																	//															} catch (ArgumentException)
 																	//															{
-																	//																ThrowVMException("{buffer.ToStringCpp()} is not security modifer of setter (getter)", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																	//																VirtualMachine.ThrowVMException("{buffer.ToStringCpp()} is not security modifer of setter (getter)", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																	//															}
 																	current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error(""); //skip whitespace
 																		buffer.Clear();
@@ -770,7 +770,7 @@ variable:
 																					current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																				} catch (exception& ex)
 																			{
-																				ThrowVMException("Field`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																				VirtualMachine.ThrowVMException("Field`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																			}
 																		}
 																if (buffer.ToStringCpp().equal("set"))
@@ -790,7 +790,7 @@ variable:
 																						current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																						} catch (exception& ex)
 																					{
-																						ThrowVMException("End of arguments not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																						VirtualMachine.ThrowVMException("End of arguments not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																					}
 																				}
 																			string argument = buffer.ToStringCpp();
@@ -803,7 +803,7 @@ variable:
 																			//start parse block
 																		} else
 																		{
-																			ThrowVMException("Arguments or start of setter not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																			VirtualMachine.ThrowVMException("Arguments or start of setter not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																		}
 																	current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																		//parse block
@@ -814,7 +814,7 @@ variable:
 																				current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																				} catch (exception& ex)
 																			{
-																				ThrowVMException("Start of setter block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																				VirtualMachine.ThrowVMException("Start of setter block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																			}
 																		}
 																	if (current == '[')
@@ -829,13 +829,13 @@ variable:
 																						current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																					} catch (exception& ex)
 																				{
-																					ThrowVMException("End of block of fields not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																					VirtualMachine.ThrowVMException("End of block of fields not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																				}
 																			}
 																		stackVar.setter.body = buffer.ToStringCpp();
 																	} else
 																	{
-																		ThrowVMException("Start of block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																		VirtualMachine.ThrowVMException("Start of block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																	}
 																	current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error(""); //skip ']'
 																		while (current != ' ')
@@ -845,7 +845,7 @@ variable:
 																				current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																				} catch (exception& ex)
 																			{
-																				ThrowVMException("Getter security not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																				VirtualMachine.ThrowVMException("Getter security not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																			}
 																		}
 																	buffer.Clear();
@@ -857,7 +857,7 @@ variable:
 																				current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																			} catch (exception& ex)
 																		{
-																			ThrowVMException("Getter security not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																			VirtualMachine.ThrowVMException("Getter security not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																		}
 																	}
 																	try
@@ -865,7 +865,7 @@ variable:
 																		//																	stackVar.getter.security = (SecurityModifer) Enum.Parse(typeof(SecurityModifer), buffer.ToStringCpp().equal();
 																	} catch (exception& ex)
 																	{
-																		ThrowVMException("{buffer.ToStringCpp()} is not security modifer", VirtualMachine.position - stack_code.size() + position, ExceptionType.NotFoundException);
+																		VirtualMachine.ThrowVMException("{buffer.ToStringCpp()} is not security modifer", VirtualMachine.position - stack_code.size() + position, ExceptionType.NotFoundException);
 																	}
 																	while (current != ' ')
 																	{
@@ -874,7 +874,7 @@ variable:
 																			current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																			} catch (exception& ex)
 																		{
-																			ThrowVMException("Getter not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																			VirtualMachine.ThrowVMException("Getter not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																		}
 																	}
 																	buffer.Clear();
@@ -886,16 +886,16 @@ variable:
 																				current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																			} catch (exception& ex)
 																		{
-																			ThrowVMException("Getter not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																			VirtualMachine.ThrowVMException("Getter not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																		}
 																	}
 																	if (buffer.ToStringCpp().equal("get"))
 																	{
-																		ThrowVMException("Unknown keyword {buffer.ToStringCpp()}", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																		VirtualMachine.ThrowVMException("Unknown keyword {buffer.ToStringCpp()}", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																	}
 																} else if (buffer.ToStringCpp().equal("get"))
 																{
-																	ThrowVMException("Unknown keyword {buffer.ToStringCpp()}", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																	VirtualMachine.ThrowVMException("Unknown keyword {buffer.ToStringCpp()}", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																}
 																current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																	//parse block
@@ -906,7 +906,7 @@ variable:
 																			current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																			} catch (exception& ex)
 																		{
-																			ThrowVMException("Start of getter block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																			VirtualMachine.ThrowVMException("Start of getter block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																		}
 																	}
 																if (current == '[')
@@ -921,7 +921,7 @@ variable:
 																					current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 																				} catch (exception& ex)
 																			{
-																				ThrowVMException("End of block of fields not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																				VirtualMachine.ThrowVMException("End of block of fields not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																			}
 																		}
 																	stackVar.getter.body = buffer.ToStringCpp();
@@ -930,13 +930,13 @@ variable:
 																	if (stack_code[++position] == ',') goto variable;
 																	} else
 																{
-																	ThrowVMException("Start of block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+																	VirtualMachine.ThrowVMException("Start of block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																}
 															}
 													}
 												} else
 												{
-													ThrowVMException("Start of fields not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+													VirtualMachine.ThrowVMException("Start of fields not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 												}
 										}
 										break;
@@ -950,7 +950,7 @@ variable:
 										//														current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 										//													} catch (exception& ex)
 										//													{
-										//														ThrowVMException("Start of constants not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+										//														VirtualMachine.ThrowVMException("Start of constants not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 										//													}
 										//												}
 										//												if (current == '[')
@@ -962,16 +962,16 @@ variable:
 										//															current = stack_code[++position];if(position>stack_code.size()) throw runtime_error("");
 										//														} catch (exception& ex)
 										//														{
-										//															ThrowVMException("End of constants block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+										//															VirtualMachine.ThrowVMException("End of constants block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 										//														} //it`s time solution
 										//													}
 										//												} else
 										//												{
-										//													ThrowVMException("Open brackets in constants not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+										//													VirtualMachine.ThrowVMException("Open brackets in constants not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 										//												}
 										//											} else
 										//											{
-										//												ThrowVMException("{newWolClass.classType.ToString().ToLower()} don`t support constants", VirtualMachine.position - stack_code.size() + position,TypeNotSupportedException);
+										//												VirtualMachine.ThrowVMException("{newWolClass.classType.ToString().ToLower()} don`t support constants", VirtualMachine.position - stack_code.size() + position,TypeNotSupportedException);
 										//											}
 										break;
 									case "],": //костыль(
@@ -981,7 +981,7 @@ variable:
 										buffer.Clear();
 											goto out_cycle;
 									default:
-										ThrowVMException("Unknown keyword {buffer.ToStringCpp()} in the class initilization", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+										VirtualMachine.ThrowVMException("Unknown keyword {buffer.ToStringCpp()} in the class initilization", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 										break;
 									}
 								}
@@ -995,11 +995,11 @@ variable:
 								}
 							} else
 							{
-								ThrowVMException("Start of block operator is not valid", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+								VirtualMachine.ThrowVMException("Start of block operator is not valid", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 							}
 						} else
 						{
-							ThrowVMException("Assigment operator in class initilization is not valid ('{current}')", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+							VirtualMachine.ThrowVMException("Assigment operator in class initilization is not valid ('{current}')", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 						}
 						while (current != ' ')
 						{
@@ -1008,13 +1008,13 @@ variable:
 								current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 								} catch (exception& ex)
 							{
-								ThrowVMException("End of classes not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+								VirtualMachine.ThrowVMException("End of classes not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 							}
 						}
 					}
 				} else
 				{
-					ThrowVMException("Classes`s start not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+					VirtualMachine.ThrowVMException("Classes`s start not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 				}
 				buffer.Clear();
 			} else if (buffer.ToStringCpp().equal("func"))
@@ -1027,7 +1027,7 @@ variable:
 						current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 						} catch (exception& ex)
 					{
-						ThrowVMException("Functions is empty", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+						VirtualMachine.ThrowVMException("Functions is empty", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 					}
 				}
 				if (current == '{')
@@ -1043,7 +1043,7 @@ function:
 									current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 									} catch (exception& ex)
 								{
-									ThrowVMException("Function`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+									VirtualMachine.ThrowVMException("Function`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 								}
 							}
 						while (current != ' ') //get function name
@@ -1054,7 +1054,7 @@ function:
 									current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 								} catch (exception& ex)
 							{
-								ThrowVMException("Function`s name not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+								VirtualMachine.ThrowVMException("Function`s name not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 							}
 						}
 						string func_name = buffer.ToStringCpp();
@@ -1062,7 +1062,7 @@ function:
 							current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 							if (current != '=') //check assignment operator
 							{
-								ThrowVMException("Assigment operator isn`t right in fucntion ('{current}')", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+								VirtualMachine.ThrowVMException("Assigment operator isn`t right in fucntion ('{current}')", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 							} else
 							{
 								//								wolFunction func = new wolFunction(); //create empty function
@@ -1076,7 +1076,7 @@ function:
 											current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 										} catch (exception& ex)
 									{
-										ThrowVMException("Function`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+										VirtualMachine.ThrowVMException("Function`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 									}
 								}
 								func.security = (SecurityModifer) Enum.Parse(typeof(SecurityModifer), buffer.ToStringCpp().equal(, true); //write stack modifer to our function
@@ -1090,7 +1090,7 @@ function:
 												current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 											} catch (exception& ex)
 										{
-											ThrowVMException("Function`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+											VirtualMachine.ThrowVMException("Function`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 										}
 									}
 								try
@@ -1117,7 +1117,7 @@ function:
 													current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 													} catch (exception& ex)
 												{
-													ThrowVMException("End of arguments not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+													VirtualMachine.ThrowVMException("End of arguments not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 												}
 											}
 										//									string[] arguments = buffer.ToStringCpp().equal(.Split(',');
@@ -1129,7 +1129,7 @@ function:
 										//start parse block
 									} else
 									{
-										ThrowVMException("Arguments or start of function not found ('{current}')", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+										VirtualMachine.ThrowVMException("Arguments or start of function not found ('{current}')", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 									}
 								current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 									//parse block
@@ -1140,7 +1140,7 @@ function:
 											current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 											} catch (exception& ex)
 										{
-											ThrowVMException("Start of function block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+											VirtualMachine.ThrowVMException("Start of function block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 										}
 									}
 								if (current == '[')
@@ -1155,7 +1155,7 @@ function:
 													current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 												} catch (exception& ex)
 											{
-												ThrowVMException("End of block of function not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+												VirtualMachine.ThrowVMException("End of block of function not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 											}
 										}
 									func.body = buffer.ToStringCpp();
@@ -1174,18 +1174,18 @@ function:
 											current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 											} catch (exception& ex)
 										{
-											ThrowVMException("End of functions not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+											VirtualMachine.ThrowVMException("End of functions not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 										}
 									}
 								} else
 								{
-									ThrowVMException("Start of block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+									VirtualMachine.ThrowVMException("Start of block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 								}
 							}
 					}
 				} else
 				{
-					ThrowVMException("Functions`s start not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+					VirtualMachine.ThrowVMException("Functions`s start not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 				}
 			} else if (buffer.ToStringCpp().equal("var"))
 			{
@@ -1197,7 +1197,7 @@ function:
 						current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 						} catch (exception& ex)
 					{
-						ThrowVMException("Variables is empty", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+						VirtualMachine.ThrowVMException("Variables is empty", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 					}
 				}
 				if (current == '{')
@@ -1213,7 +1213,7 @@ variable:
 									current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 									} catch (exception& ex)
 								{
-									ThrowVMException("Variable`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+									VirtualMachine.ThrowVMException("Variable`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 								}
 							}
 						while (current != ' ') //get variable name
@@ -1224,7 +1224,7 @@ variable:
 									current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 								} catch (exception& ex)
 							{
-								ThrowVMException("Variable`s name not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+								VirtualMachine.ThrowVMException("Variable`s name not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 							}
 						}
 						string var_name = buffer.ToStringCpp();
@@ -1232,7 +1232,7 @@ variable:
 							current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 							if (current != '=') //check assignment operator
 							{
-								ThrowVMException("Assigment operator isn`t right in variable", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+								VirtualMachine.ThrowVMException("Assigment operator isn`t right in variable", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 							} else
 							{
 								//								Value stackVar = Value.VoidValue; //create empty value with parent 'void'
@@ -1247,7 +1247,7 @@ variable:
 											current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 										} catch (exception& ex)
 									{
-										ThrowVMException("Variable`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+										VirtualMachine.ThrowVMException("Variable`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 									}
 								}
 								try
@@ -1255,7 +1255,7 @@ variable:
 									stackVar.type = VirtualMachine.GetWolClass(buffer.ToStringCpp());
 								} catch (exception& ex)
 								{
-									//ThrowVMException("")
+									//VirtualMachine.ThrowVMException("")
 									//don`t need now throw vm exception becouse in GetWolClass was throw exception
 								}
 								buffer.Clear();
@@ -1268,7 +1268,7 @@ variable:
 												current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 											} catch (exception& ex)
 										{
-											ThrowVMException("Variable`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+											VirtualMachine.ThrowVMException("Variable`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 										}
 									}
 								//								SecurityModifer security = SecurityModifer.PRIVATE;
@@ -1277,7 +1277,7 @@ variable:
 								//									security = (SecurityModifer) Enum.Parse(typeof(SecurityModifer), buffer.ToStringCpp().(, true); //write stack modifer to our variable
 								//								} catch (Exception)
 								//								{
-								//									ThrowVMException("{buffer.ToStringCpp().equal(} is not security modifer", VirtualMachine.position - stack_code.size() + position, ExceptionType.NotFoundException);
+								//									VirtualMachine.ThrowVMException("{buffer.ToStringCpp().equal(} is not security modifer", VirtualMachine.position - stack_code.size() + position, ExceptionType.NotFoundException);
 								//								}
 								current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error(""); //skip whitespace
 									buffer.Clear();
@@ -1289,7 +1289,7 @@ variable:
 												current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 											} catch (exception& ex)
 										{
-											ThrowVMException("Variable`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+											VirtualMachine.ThrowVMException("Variable`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 										}
 									}
 								if (buffer.ToStringCpp().equal("set"))
@@ -1309,7 +1309,7 @@ variable:
 														current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 														} catch (exception& ex)
 													{
-														ThrowVMException("End of arguments not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+														VirtualMachine.ThrowVMException("End of arguments not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 													}
 												}
 											//										string argument = buffer.ToStringCpp().equal(;
@@ -1322,7 +1322,7 @@ variable:
 											//start parse block
 										} else
 										{
-											ThrowVMException("Arguments or start of setter not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+											VirtualMachine.ThrowVMException("Arguments or start of setter not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 										}
 									current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 										//parse block
@@ -1333,7 +1333,7 @@ variable:
 												current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 												} catch (exception& ex)
 											{
-												ThrowVMException("Start of setter block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+												VirtualMachine.ThrowVMException("Start of setter block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 											}
 										}
 									if (current == '[')
@@ -1348,13 +1348,13 @@ variable:
 														current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 													} catch (exception& ex)
 												{
-													ThrowVMException("End of block of variables not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+													VirtualMachine.ThrowVMException("End of block of variables not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 												}
 											}
 										//									stackVar.setter.body = buffer.ToStringCpp();
 									} else
 									{
-										ThrowVMException("Start of setter block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+										VirtualMachine.ThrowVMException("Start of setter block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 									}
 									current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error(""); //skip ']'
 										while (current != ' ')
@@ -1364,7 +1364,7 @@ variable:
 												current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 												} catch (exception& ex)
 											{
-												ThrowVMException("Getter security not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+												VirtualMachine.ThrowVMException("Getter security not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 											}
 										}
 									buffer.Clear();
@@ -1376,7 +1376,7 @@ variable:
 												current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 											} catch (exception& ex)
 										{
-											ThrowVMException("Getter security not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+											VirtualMachine.ThrowVMException("Getter security not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 										}
 									}
 									try
@@ -1384,7 +1384,7 @@ variable:
 										//									stackVar.getter.security = (SecurityModifer) Enum.Parse(typeof(SecurityModifer), buffer.ToStringCpp().equal();
 									} catch (exception& ex)
 									{
-										ThrowVMException("{buffer.ToStringCpp().equal(} is not security modifer", VirtualMachine.position - stack_code.size() + position, NotFoundException);
+										VirtualMachine.ThrowVMException("{buffer.ToStringCpp().equal(} is not security modifer", VirtualMachine.position - stack_code.size() + position, NotFoundException);
 									}
 									while (current != ' ')
 									{
@@ -1393,7 +1393,7 @@ variable:
 											current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 											} catch (exception& ex)
 										{
-											ThrowVMException("Getter not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+											VirtualMachine.ThrowVMException("Getter not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 										}
 									}
 									buffer.Clear();
@@ -1405,16 +1405,16 @@ variable:
 												current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 											} catch (exception& ex)
 										{
-											ThrowVMException("Getter not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+											VirtualMachine.ThrowVMException("Getter not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 										}
 									}
 									if (buffer.ToStringCpp().equal("get"))
 									{
-										ThrowVMException("Unknown keyword {buffer.ToStringCpp().equal(}", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+										VirtualMachine.ThrowVMException("Unknown keyword {buffer.ToStringCpp().equal(}", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 									}
 								} else
 									if (buffer.ToStringCpp().equal( != "get") {
-										ThrowVMException("Unknown keyword {buffer.ToStringCpp().equal(}", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+										VirtualMachine.ThrowVMException("Unknown keyword {buffer.ToStringCpp().equal(}", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 									}
 								current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 									//parse block
@@ -1425,7 +1425,7 @@ variable:
 											current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 											} catch (exception& ex)
 										{
-											ThrowVMException("Start of getter block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+											VirtualMachine.ThrowVMException("Start of getter block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 										}
 									}
 								if (current == '[')
@@ -1440,13 +1440,13 @@ variable:
 													current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 												} catch (exception& ex)
 											{
-												ThrowVMException("End of block of variables not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+												VirtualMachine.ThrowVMException("End of block of variables not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 											}
 										}
 									//								stackVar.getter.body = buffer.ToStringCpp();
 								} else
 								{
-									ThrowVMException("Start of getter block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+									VirtualMachine.ThrowVMException("Start of getter block not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 								}
 								//Console.WriteLine("Var name: " + var_name);
 								//Console.WriteLine("Setter: " + stackVar.setter.body);
@@ -1464,19 +1464,19 @@ variable:
 										current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 										} catch (exception& ex)
 									{
-										ThrowVMException("End of functions not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+										VirtualMachine.ThrowVMException("End of functions not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 									}
 								}
 							}
 					}
 				} else
 				{
-					ThrowVMException("Variables`s start not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+					VirtualMachine.ThrowVMException("Variables`s start not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 				}
 				buffer.Clear();
 			} else
 			{
-				ThrowVMException("Unknown keyword {buffer.ToStringCpp().equal(} in stack initilization", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+				VirtualMachine.ThrowVMException("Unknown keyword {buffer.ToStringCpp().equal(} in stack initilization", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 			}
 			try
 			{
@@ -1494,7 +1494,7 @@ variable:
 		return this;
 	} else
 	{
-		ThrowVMException("Start of block is not '{'", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+		VirtualMachine.ThrowVMException("Start of block is not '{'", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 		return this;
 	}
 }
