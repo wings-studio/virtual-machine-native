@@ -5,7 +5,7 @@
 #include <string.h>
 #include <map>
 #include "utilMacr.h"
-#include "hedVm.h"
+#include "Enums.h"
 #include "SB.h"
 #include "Value.h"
 #include "wolFunction.h"

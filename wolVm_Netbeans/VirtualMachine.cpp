@@ -6,12 +6,11 @@
  */
 #include <iostream>
 #include <cstring>
-#include "hedVm.h"
+#include "Stack.h"
+#include "Enums.h"
 #include "utilMacr.h"
 #include "SB.h"
 using namespace std;
-class Stack {
-};
 /* рус: Метод где мы анализиреум исходный код ITLWM(Intermediate text language
  * of Wol Vm), создаем оььекты на стеке.
  * en: Methon where we parse(analize) source of ITLWM(Intermediate text language
@@ -23,7 +22,7 @@ class Stack {
  * @param input исходный код itlwm типа строки | source code of itlwm as string
  */
 extern StringBuilder buffer;
-void VirtualMachine::this->ThrowVMException(string message, int position, ExceptionType type) {
+void VirtualMachine::ThrowVMException(string message, int position, ExceptionType type) {
 	cout <<type<< "Exception in position{" << position << "}" << message << endl;
 } 
 void VirtualMachine::Run(S input) {

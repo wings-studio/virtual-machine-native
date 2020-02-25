@@ -1,4 +1,4 @@
-#include "hedVm.h"
+#include "Enums.h"
 #include "wolClass.h"
 	Void::Void() {
 		classType = wolClassType.STRUCT;

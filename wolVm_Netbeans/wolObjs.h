@@ -7,9 +7,15 @@
 #ifndef WOLOBJS_H
 #define	WOLOBJS_H
 #include "wolClass.h"
-class Void(wolClass){
-public :
+#include "wolObjs.h"
+class Void : public wolClass{
+public:
 	Void();
 	ToString();
 };
+class wolArray : public wolCollection{
+public :
+	 wolArray();
+	 wolArray(wolClass type);
+}
 #endif	/* WOLOBJS_H */
