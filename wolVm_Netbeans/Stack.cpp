@@ -11,6 +11,8 @@
 #include "wolFunction.h"
 #include "wolClass.h"
 #include "VirtualMachine.h"
+/*Для MinGW сравнение Cpp строк-через compare
+ */
 using namespace std;
 extern StringBuilder buffer;
 extern Stack stack;
@@ -140,7 +142,7 @@ start:
 					//VirtualMachine.ThrowVMException("End of block of stack not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 				}
 			}
-			if (buffer.ToStringCpp().equal("class"))
+			if (buffer.ToStringCpp().compare("class"))
 			{
 				buffer.Clear();
 				while (current != ' ') //skip whitespaces
@@ -252,7 +254,7 @@ start:
 								newWolClass.classType = (wolClassType) Enum.Parse(typeof(wolClassType), buffer.ToStringCpp()(, true); //give type to our class from buffer without case sensetive
 							} catch (exception& ex)
 							{
-								VirtualMachine.ThrowVMException("{buffer.ToStringCpp().equal(} is not class type", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+								VirtualMachine.ThrowVMException("{buffer.ToStringCpp().compare(} is not class type", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 							}
 							while (current != ' ')
 							{
@@ -278,10 +280,10 @@ start:
 							}
 							try
 							{
-								newWolClass.security = (SecurityModifer) Enum.Parse(typeof(SecurityModifer), buffer.ToStringCpp().equal(, true);
+								newWolClass.security = (SecurityModifer) Enum.Parse(typeof(SecurityModifer), buffer.ToStringCpp().compare(, true);
 							} catch (Exception)
 							{
-								VirtualMachine.ThrowVMException("{buffer.ToStringCpp().equal(} is not security modifer", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+								VirtualMachine.ThrowVMException("{buffer.ToStringCpp().compare(} is not security modifer", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 							}
 							while (current != ' ')
 							{
@@ -307,7 +309,7 @@ start:
 										VirtualMachine.ThrowVMException("Classes`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 									}
 								}
-								foreach(string parent_name in buffer.ToStringCpp().equal(.Remove(0, 1).Split(',')) {
+								foreach(string parent_name in buffer.ToStringCpp().compare(.Remove(0, 1).Split(',')) {
 									try
 									{
 										newWolClass.parents.Add(parent_name, VirtualMachine.GetWolClass(parent_name)); //add values in parens to parents of our class
@@ -393,7 +395,7 @@ constructor:
 																VirtualMachine.ThrowVMException("Constructor`s name not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 															}
 														}
-														string constrnanme = buffer.ToStringCpp().equal(;
+														string constrnanme = buffer.ToStringCpp().compare(;
 															buffer.Clear();
 														while (current != ' ') //skip whitespaces
 														{
@@ -424,7 +426,7 @@ constructor:
 																	VirtualMachine.ThrowVMException("Constructor`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																}
 															}
-															constr.security = (SecurityModifer) Enum.Parse(typeof(SecurityModifer), buffer.ToStringCpp().equal(, true); //write stack modifer to our function
+															constr.security = (SecurityModifer) Enum.Parse(typeof(SecurityModifer), buffer.ToStringCpp().compare(, true); //write stack modifer to our function
 																current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error(""); //skip whitespace
 																if (current == ':')
 																{
@@ -445,7 +447,7 @@ constructor:
 																				VirtualMachine.ThrowVMException("End of arguments not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																			}
 																		}
-																	string[] arguments = buffer.ToStringCpp().equal(.Split(',');
+																	string[] arguments = buffer.ToStringCpp().compare(.Split(',');
 																		foreach(string argument in arguments) {
 																		string name = argument.Split(':')[0].Trim();
 																			wolClass type = VirtualMachine.GetWolClass(argument.Split(':')[1].Trim());
@@ -483,7 +485,7 @@ constructor:
 																			VirtualMachine.ThrowVMException("End of block of constructor not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																		}
 																	}
-																constr.body = buffer.ToStringCpp().equal(;
+																constr.body = buffer.ToStringCpp().compare(;
 																	buffer.Clear();
 																	newWolClass.constructors.Add(constrnanme, constr);
 																if (stack_code[++position] == ',') goto constructor;
@@ -570,7 +572,7 @@ constructor:
 																}
 																try
 																{
-																	//																func.security = (SecurityModifer) Enum.Parse(typeof(SecurityModifer), buffer.ToStringCpp().equal(, true); //write stack modifer to our function
+																	//																func.security = (SecurityModifer) Enum.Parse(typeof(SecurityModifer), buffer.ToStringCpp().compare(, true); //write stack modifer to our function
 																} catch (exception& ex)
 																{
 																	VirtualMachine.ThrowVMException("{buffer.ToStringCpp()} is not secutiry modifer", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
@@ -773,7 +775,7 @@ variable:
 																				VirtualMachine.ThrowVMException("Field`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																			}
 																		}
-																if (buffer.ToStringCpp().equal("set"))
+																if (buffer.ToStringCpp().compare("set"))
 																{
 																	//																stackVar.setter.security = security;
 																	current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error(""); //skip whitespace
@@ -862,7 +864,7 @@ variable:
 																	}
 																	try
 																	{
-																		//																	stackVar.getter.security = (SecurityModifer) Enum.Parse(typeof(SecurityModifer), buffer.ToStringCpp().equal();
+																		//																	stackVar.getter.security = (SecurityModifer) Enum.Parse(typeof(SecurityModifer), buffer.ToStringCpp().compare();
 																	} catch (exception& ex)
 																	{
 																		VirtualMachine.ThrowVMException("{buffer.ToStringCpp()} is not security modifer", VirtualMachine.position - stack_code.size() + position, ExceptionType.NotFoundException);
@@ -889,11 +891,11 @@ variable:
 																			VirtualMachine.ThrowVMException("Getter not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																		}
 																	}
-																	if (buffer.ToStringCpp().equal("get"))
+																	if (buffer.ToStringCpp().compare("get"))
 																	{
 																		VirtualMachine.ThrowVMException("Unknown keyword {buffer.ToStringCpp()}", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																	}
-																} else if (buffer.ToStringCpp().equal("get"))
+																} else if (buffer.ToStringCpp().compare("get"))
 																{
 																	VirtualMachine.ThrowVMException("Unknown keyword {buffer.ToStringCpp()}", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 																}
@@ -1017,7 +1019,7 @@ variable:
 					VirtualMachine.ThrowVMException("Classes`s start not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 				}
 				buffer.Clear();
-			} else if (buffer.ToStringCpp().equal("func"))
+			} else if (buffer.ToStringCpp().compare("func"))
 			{
 				buffer.Clear();
 				while (current != ' ') //skip whitespaces
@@ -1079,7 +1081,7 @@ function:
 										VirtualMachine.ThrowVMException("Function`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 									}
 								}
-								func.security = (SecurityModifer) Enum.Parse(typeof(SecurityModifer), buffer.ToStringCpp().equal(, true); //write stack modifer to our function
+								func.security = (SecurityModifer) Enum.Parse(typeof(SecurityModifer), buffer.ToStringCpp().compare(, true); //write stack modifer to our function
 									current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error(""); //skip whitespace
 									buffer.Clear();
 									while (current != ' ') //get return type
@@ -1095,7 +1097,7 @@ function:
 									}
 								try
 								{
-									func.returnType = VirtualMachine.GetWolClass(buffer.ToStringCpp().equal();
+									func.returnType = VirtualMachine.GetWolClass(buffer.ToStringCpp().compare();
 								} catch (exception& ex)
 								{
 									//don`t need now throw vm exception becouse in GetWolClass was throw exception
@@ -1120,7 +1122,7 @@ function:
 													VirtualMachine.ThrowVMException("End of arguments not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 												}
 											}
-										//									string[] arguments = buffer.ToStringCpp().equal(.Split(',');
+										//									string[] arguments = buffer.ToStringCpp().compare(.Split(',');
 										foreach(string argument in arguments) {
 											string name = argument.Split(':')[0].Trim();
 												wolClass type = VirtualMachine.GetWolClass(argument.Split(':')[1].Trim());
@@ -1187,7 +1189,7 @@ function:
 				{
 					VirtualMachine.ThrowVMException("Functions`s start not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 				}
-			} else if (buffer.ToStringCpp().equal("var"))
+			} else if (buffer.ToStringCpp().compare("var"))
 			{
 				buffer.Clear();
 				while (current != ' ') //skip whitespaces
@@ -1277,7 +1279,7 @@ variable:
 								//									security = (SecurityModifer) Enum.Parse(typeof(SecurityModifer), buffer.ToStringCpp().(, true); //write stack modifer to our variable
 								//								} catch (Exception)
 								//								{
-								//									VirtualMachine.ThrowVMException("{buffer.ToStringCpp().equal(} is not security modifer", VirtualMachine.position - stack_code.size() + position, ExceptionType.NotFoundException);
+								//									VirtualMachine.ThrowVMException("{buffer.ToStringCpp().compare(} is not security modifer", VirtualMachine.position - stack_code.size() + position, ExceptionType.NotFoundException);
 								//								}
 								current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error(""); //skip whitespace
 									buffer.Clear();
@@ -1292,7 +1294,7 @@ variable:
 											VirtualMachine.ThrowVMException("Variable`s end not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 										}
 									}
-								if (buffer.ToStringCpp().equal("set"))
+								if (buffer.ToStringCpp().compare("set"))
 								{
 									stackVar.setter.security = security;
 										current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
@@ -1312,7 +1314,7 @@ variable:
 														VirtualMachine.ThrowVMException("End of arguments not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 													}
 												}
-											//										string argument = buffer.ToStringCpp().equal(;
+											//										string argument = buffer.ToStringCpp().compare(;
 											//										string name = argument.Split(':')[0].Trim();
 											//										wolClass type = VirtualMachine.GetWolClass(argument.Split(':')[1].Trim());
 											//										stackVar.setter.arguments.Add(name, type); //add argumrnt (null pointer) to setter
@@ -1381,10 +1383,10 @@ variable:
 									}
 									try
 									{
-										//									stackVar.getter.security = (SecurityModifer) Enum.Parse(typeof(SecurityModifer), buffer.ToStringCpp().equal();
+										//									stackVar.getter.security = (SecurityModifer) Enum.Parse(typeof(SecurityModifer), buffer.ToStringCpp().compare();
 									} catch (exception& ex)
 									{
-										VirtualMachine.ThrowVMException("{buffer.ToStringCpp().equal(} is not security modifer", VirtualMachine.position - stack_code.size() + position, NotFoundException);
+										VirtualMachine.ThrowVMException("{buffer.ToStringCpp().compare(} is not security modifer", VirtualMachine.position - stack_code.size() + position, NotFoundException);
 									}
 									while (current != ' ')
 									{
@@ -1408,13 +1410,13 @@ variable:
 											VirtualMachine.ThrowVMException("Getter not found", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 										}
 									}
-									if (buffer.ToStringCpp().equal("get"))
+									if (buffer.ToStringCpp().compare("get"))
 									{
-										VirtualMachine.ThrowVMException("Unknown keyword {buffer.ToStringCpp().equal(}", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+										VirtualMachine.ThrowVMException("Unknown keyword {buffer.ToStringCpp().compare(}", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 									}
 								} else
-									if (buffer.ToStringCpp().equal( != "get") {
-										VirtualMachine.ThrowVMException("Unknown keyword {buffer.ToStringCpp().equal(}", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+									if (buffer.ToStringCpp().compare( != "get") {
+										VirtualMachine.ThrowVMException("Unknown keyword {buffer.ToStringCpp().compare(}", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 									}
 								current = stack_code[++position]; if (position > stack_code.size()) throw runtime_error("");
 									//parse block
@@ -1476,7 +1478,7 @@ variable:
 				buffer.Clear();
 			} else
 			{
-				VirtualMachine.ThrowVMException("Unknown keyword {buffer.ToStringCpp().equal(} in stack initilization", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
+				VirtualMachine.ThrowVMException("Unknown keyword {buffer.ToStringCpp().compare(} in stack initilization", VirtualMachine.position - stack_code.size() + position, BLDSyntaxException);
 			}
 			try
 			{
